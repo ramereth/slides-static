@@ -73,7 +73,7 @@
 
 <h3>by Lance Albertson</h3>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/introduction/osllogo.png" width="821" height="295" alt="osllogo"/></p></div>
+<p><img src="file/introduction/osllogo.png" width="821" height="295" alt="osllogo"/></p></div>
 </div><div class="slide" data-transition="fade"><div class="content bullets" ref="introduction/1_intro/2">
 <h1>About Me</h1>
 
@@ -120,11 +120,11 @@
 </div><div class="slide" data-transition="fade"><div class="content center" ref="state_of_virt/2_traditional-cluster">
 <h2>Traditional virtualization cluster</h2>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/state_of_virt/traditional-cluster.png" width="1190" height="762" alt="traditional-cluster"/></p></div>
+<p><img src="file/state_of_virt/traditional-cluster.png" width="1190" height="762" alt="traditional-cluster"/></p></div>
 </div><div class="slide" data-transition="fade"><div class="content center" ref="state_of_virt/3_ganeti-cluster">
 <h1>Ganeti cluster</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/state_of_virt/ganeti-cluster.png" width="1504" height="684" alt="ganeti-cluster"/></p></div>
+<p><img src="file/state_of_virt/ganeti-cluster.png" width="1504" height="684" alt="ganeti-cluster"/></p></div>
 </div><div class="slide" data-transition="fade"><div class="content bullets" ref="design_goals/1_ganeti-intro/1">
 <h1>What is ganeti?</h1>
 
@@ -155,7 +155,7 @@
 </ul>
 
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/design_goals/node-instance.png" width="469" height="499" alt="node-instance"/></p></div>
+<p><img src="file/design_goals/node-instance.png" width="469" height="499" alt="node-instance"/></p></div>
 </div><div class="slide" data-transition="fade"><div class="content bullets" ref="design_goals/2_goals/1">
 <h1>Goals</h1>
 
@@ -179,7 +179,7 @@
 </div><div class="slide" data-transition="fade"><div class="content smbullets center" ref="design_goals/3_redundancy">
 <h1>Storage replication: DRBD</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/design_goals/drbd.png" width="1679" height="450" alt="drbd"/></p>
+<p><img src="file/design_goals/drbd.png" width="1679" height="450" alt="drbd"/></p>
 
 <ul>
 <li>Primary &amp; secondary storage nodes</li>
@@ -253,7 +253,7 @@
 </div><div class="slide" data-transition="fade"><div class="content commandline smaller-img center incremental" ref="cluster_setup/2_cluster-creation/1">
 <h1>Cluster creation</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/cluster_setup/cluster-creation.png" width="819" height="383" alt="cluster-creation"/></p>
+<p><img src="file/cluster_setup/cluster-creation.png" width="819" height="383" alt="cluster-creation"/></p>
 
 <pre><code><code class="command">$ gnt-cluster init \</code><code class="result">
       --master-netdev=br42 \
@@ -267,14 +267,14 @@
 </div><div class="slide" data-transition="fade"><div class="content commandline center incremental" ref="cluster_setup/2_cluster-creation/2">
 <h1>Adding nodes</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/cluster_setup/adding-nodes.png" width="1782" height="284" alt="adding-nodes"/></p>
+<p><img src="file/cluster_setup/adding-nodes.png" width="1782" height="284" alt="adding-nodes"/></p>
 
 <pre><code><code class="command">$ gnt-node add -s 10.1.11.201 node2</code><code class="result">
 </code></code></pre></div>
 </div><div class="slide" data-transition="fade"><div class="content commandline center incremental" ref="cluster_setup/2_cluster-creation/3">
 <h1>Listing nodes</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/cluster_setup/adding-nodes.png" width="1782" height="284" alt="adding-nodes"/></p>
+<p><img src="file/cluster_setup/adding-nodes.png" width="1782" height="284" alt="adding-nodes"/></p>
 
 <pre><code><code class="command">$ gnt-node list</code><code class="result">
 Node          DTotal  DFree MTotal MNode MFree Pinst Sinst
@@ -286,7 +286,7 @@ g4.osuosl.bak 673.9G 154.8G  23.6G 16.4G 15.4G    16    15
 </div><div class="slide" data-transition="fade"><div class="content commandline incremental" ref="cluster_setup/2_cluster-creation/4">
 <h1>Cluster verification</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/cluster_setup/adding-nodes.png" width="1782" height="284" alt="adding-nodes"/></p>
+<p><img src="file/cluster_setup/adding-nodes.png" width="1782" height="284" alt="adding-nodes"/></p>
 
 <pre><code><code class="command">$ gnt-cluster verify</code><code class="result">
 Wed Jun  2 17:31:07 2010 * Verifying global settings
@@ -338,7 +338,7 @@ Hypervisor parameters:
 </div><div class="slide" data-transition="fade"><div class="content commandline center incremental small" ref="instances/1_instance-commands/1">
 <h1>Creating an instance</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/instances/creating-instance.png" width="1782" height="420" alt="creating-instance"/></p>
+<p><img src="file/instances/creating-instance.png" width="1782" height="420" alt="creating-instance"/></p>
 
 <pre><code><code class="command">$ gnt-instance add -t drbd -n node3:node2 \</code><code class="result">
 </code><code class="command">$    -s 10G -o image+gentoo-hardened-cf \</code><code class="result">
@@ -436,18 +436,18 @@ puffin        image+manual       g3.osuosl     running 256M
 </div><div class="slide" data-transition="fade"><div class="content center" ref="failure_examples/1_node-failure/1">
 <h1>Primary node failure</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/failure_examples/primary-failure.png" width="1782" height="456" alt="primary-failure"/></p></div>
+<p><img src="file/failure_examples/primary-failure.png" width="1782" height="456" alt="primary-failure"/></p></div>
 </div><div class="slide" data-transition="fade"><div class="content center" ref="failure_examples/1_node-failure/2">
 <h1>Primary node failure</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/failure_examples/primary-failover.png" width="1782" height="456" alt="primary-failover"/></p>
+<p><img src="file/failure_examples/primary-failover.png" width="1782" height="456" alt="primary-failover"/></p>
 
 <pre><code>$ gnt-instance failover --ignore-consistency web
 </code></pre></div>
 </div><div class="slide" data-transition="fade"><div class="content center" ref="failure_examples/1_node-failure/3">
 <h1>Secondary node failure</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/failure_examples/secondary-failover.png" width="1782" height="566" alt="secondary-failover"/></p>
+<p><img src="file/failure_examples/secondary-failover.png" width="1782" height="566" alt="secondary-failover"/></p>
 
 <pre><code>$ gnt-instance replace-disks --on-secondary \
     --new-secondary=node1 web
@@ -511,7 +511,7 @@ adding instance web.example.org to cluster config
 </div><div class="slide" data-transition="fade"><div class="content center small-img" ref="other_tools/2_ganeti-web">
 <h1>Ganeti Web</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/other_tools/ganeti-web.png" width="800" height="758" alt="ganeti-web"/></p></div>
+<p><img src="file/other_tools/ganeti-web.png" width="800" height="758" alt="ganeti-web"/></p></div>
 </div><div class="slide" data-transition="fade"><div class="content smbullets" ref="osuosl_usage/usage/1">
 <h1>Ganeti usage at OSUOSL</h1>
 
@@ -535,19 +535,19 @@ adding instance web.example.org to cluster config
 </div><div class="slide" data-transition="fade"><div class="content center" ref="osuosl_usage/usage/2">
 <h2>Xen + iSCSI vs. kvm + DRBD</h2>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/osuosl_usage/busybox.png" width="603" height="256" alt="busybox"/></p></div>
+<p><img src="file/osuosl_usage/busybox.png" width="603" height="256" alt="busybox"/></p></div>
 </div><div class="slide" data-transition="fade"><div class="content center small-img-height" ref="osuosl_usage/usage/3">
 <h1>Ganeti node CPU usage</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/osuosl_usage/g2-cpu.png" width="495" height="359" alt="g2-cpu"/></p></div>
+<p><img src="file/osuosl_usage/g2-cpu.png" width="495" height="359" alt="g2-cpu"/></p></div>
 </div><div class="slide" data-transition="fade"><div class="content center" ref="osuosl_usage/usage/4">
 <h1>Ganeti node LOAD</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/osuosl_usage/g2-load.png" width="495" height="275" alt="g2-load"/></p></div>
+<p><img src="file/osuosl_usage/g2-load.png" width="495" height="275" alt="g2-load"/></p></div>
 </div><div class="slide" data-transition="fade"><div class="content center" ref="osuosl_usage/usage/5">
 <h1>Ganeti node DRBD network</h1>
 
-<p><img src="file:///home/lance/git/github/presentation-ganeti/osuosl_usage/g2-eth1.png" width="495" height="275" alt="g2-eth1"/></p></div>
+<p><img src="file/osuosl_usage/g2-eth1.png" width="495" height="275" alt="g2-eth1"/></p></div>
 </div><div class="slide" data-transition="fade"><div class="content bullets" ref="osuosl_usage/usage/6">
 <h1>OSUOSL future ganeti plans</h1>
 
