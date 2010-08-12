@@ -1,0 +1,651 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title></title>
+
+  <link rel="stylesheet" href="./css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="./css/showoff.css" type="text/css"/>
+
+  <script type="text/javascript" src="./js/jquery-1.4.min.js"></script>
+  <script type="text/javascript" src="./js/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src="./js/jquery-print.js"></script>
+  <script type="text/javascript" src="./js/jquery.batchImageLoad.js"></script>
+
+  <script type="text/javascript" src="./js/jquery.doubletap-0.1.js"></script>
+
+  <script type="text/javascript" src="./js/fg.menu.js"></script>
+  <script type="text/javascript" src="./js/showoff.js"></script>
+  <script type="text/javascript" src="./js/jTypeWriter.js"> </script>
+  <script type="text/javascript" src="./js/sh_main.min.js"></script>
+  <script type="text/javascript" src="./js/core.js"></script>
+  <script type="text/javascript" src="./js/showoffcore.js"></script>
+
+  <link type="text/css" href="./css/fg.menu.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/theme/ui.all.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/sh_style.css" rel="stylesheet" >
+
+  
+    <link rel="stylesheet" href="file/custom.css" type="text/css"/>
+  
+
+  
+
+  <script type="text/javascript">
+  $(function(){
+    setupPreso(false, '.');
+  });
+  </script>
+</head>
+
+<body>
+
+
+<a tabindex="0" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="navmenu"><span class="ui-icon ui-icon-triangle-1-s"></span>slides</a>
+<div id="navigation" class="hidden"></div>
+
+<div id="help">
+  <table>
+    <tr><td class="key">space, &rarr;</td><td>next slide</td></tr>
+    <tr><td class="key">&larr;</td><td>previous slide</td></tr>
+    <tr><td class="key">d</td><td>debug mode</td></tr>
+    <tr><td class="key">## &lt;ret&gt;</td><td>go to slide #</td></tr>
+    <tr><td class="key">c</td><td>table of contents (vi)</td></tr>
+    <tr><td class="key">f</td><td>toggle footer</td></tr>
+    <tr><td class="key">r</td><td>reload slides</td></tr>
+    <tr><td class="key">z</td><td>toggle help (this)</td></tr>
+  </table>
+</div>
+
+<div id="preso">loading presentation...</div>
+<div id="footer">
+  <span id="slideInfo"></span>
+  <span id="debugInfo"></span>
+</div>
+
+<div id="slides" class="offscreen" style="display:none;">
+<div class="slide" data-transition="fade"><div class="content small-img center" ref="introduction/1_intro/1">
+<h1>Ganeti</h1>
+
+<h2>Creating a low-cost clustered virtualization environment</h2>
+
+<h3>by Lance Albertson</h3>
+
+<p><img src="file/introduction/osllogo.png" alt="osllogo"/></p></div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="introduction/1_intro/2">
+<h1>About Me</h1>
+
+<ul>
+<li>OSU Open Source Lab</li>
+<li>Server hosting for Open Source projects</li>
+<li>Lead Systems Administrator / Architect</li>
+<li>Gentoo developer / contributor</li>
+<li>Jazz trumpet performer</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="introduction/2_ganeti">
+<h1>What I will cover</h1>
+
+<ul>
+<li>Ganeti terminology, comparisons, &amp; goals</li>
+<li>Cluster &amp; virtual machine setup</li>
+<li>Dealing with outages</li>
+<li>OSUOSL usage of ganeti</li>
+<li>Future roadmap</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="state_of_virt/1_current/1">
+<h1>State of Virtualization</h1>
+
+<ul>
+<li>Citrix XenServer</li>
+<li>libvirt: oVirt, virt-manager</li>
+<li>Eucalyptus</li>
+<li>VMWare</li>
+<li>Open Stack*</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="state_of_virt/1_current/2">
+<h1>Issues</h1>
+
+<ul>
+<li>Overly complicated</li>
+<li>Lack of HA Storage integration</li>
+<li>Not always 100% open source</li>
+<li>Multiple layers of software</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content center" ref="state_of_virt/2_traditional-cluster">
+<h2>Traditional virtualization cluster</h2>
+
+<p><img src="file/state_of_virt/traditional-cluster.png" alt="traditional-cluster"/></p></div>
+</div><div class="slide" data-transition="fade"><div class="content center" ref="state_of_virt/3_ganeti-cluster">
+<h1>Ganeti cluster</h1>
+
+<p><img src="file/state_of_virt/ganeti-cluster.png" alt="ganeti-cluster"/></p></div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="design_goals/1_ganeti-intro/1">
+<h1>What is ganeti?</h1>
+
+<ul>
+<li>Software to manage a cluster of virtual servers</li>
+<li>Combines virtualization &amp; data replication</li>
+<li>Automates storage management</li>
+<li>Automates OS deployment</li>
+<li>Project created and maintained by Google</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content S bullets smaller-img-height img-right" ref="design_goals/1_ganeti-intro/2">
+<h1>Ganeti software requirements</h1>
+
+<p><img src="file/design_goals/requirements.png" alt="requirements"/></p>
+
+<ul>
+<li>Python</li>
+<li>various python modules</li>
+<li>DRBD</li>
+<li>LVM</li>
+<li>KVM and/or Xen</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets smaller-img center" ref="design_goals/1_ganeti-intro/3">
+<h1>Ganeti terminology</h1>
+
+<ul>
+<li>Node - physical host</li>
+<li>Instance - virtual machine, aka guest</li>
+<li>Cluster - group of nodes</li>
+</ul>
+
+
+<p><img src="file/design_goals/node-instance.png" alt="node-instance"/></p></div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="design_goals/2_goals/1">
+<h1>Goals</h1>
+
+<ul>
+<li>Reduce hardware cost</li>
+<li>Increase service availability</li>
+<li>Increase management flexibility</li>
+<li>Administration transparency</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="design_goals/2_goals/2">
+<h1>Principles</h1>
+
+<ul>
+<li>Not dependent on specific hardware</li>
+<li>Scales linearly</li>
+<li>Single node takes admin master role</li>
+<li>N+1 redundancy</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content smbullets center" ref="design_goals/3_redundancy">
+<h1>Storage replication: DRBD</h1>
+
+<p><img src="file/design_goals/drbd.png" alt="drbd"/></p>
+
+<ul>
+<li>Primary &amp; secondary storage nodes</li>
+<li>Each instance disk synced separately</li>
+<li>Dedicated backend DRBD network</li>
+<li>Allows instance failover &amp; migration</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="cluster_setup/1_ganeti-commands/1">
+<h1>Ganeti administration</h1>
+
+<ul>
+<li>Command line based</li>
+<li>Administration via single master node</li>
+<li>All commands support interactive help</li>
+<li>Consistent command line interface</li>
+<li><strong><code>gnt-&lt;command&gt;</code></strong></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="cluster_setup/1_ganeti-commands/2">
+<h1>Ganeti Commands</h1>
+
+<ul>
+<li><code>gnt-cluster</code></li>
+<li><code>gnt-node</code></li>
+<li><code>gnt-instance</code></li>
+<li><code>gnt-backup</code></li>
+<li><code>gnt-os</code></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="cluster_setup/1_ganeti-commands/3">
+<h1><code>gnt-cluster</code></h1>
+
+<ul>
+<li>Cluster-wide configuration</li>
+<li>Initialize &amp; destroy cluster</li>
+<li>Fail-over master node</li>
+<li>Verify cluster integrity</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="cluster_setup/1_ganeti-commands/4">
+<h1><code>gnt-node</code></h1>
+
+<ul>
+<li>Node-wide configuration/administration</li>
+<li>Add &amp; remove cluster nodes</li>
+<li>Relocate all secondary instances from a node</li>
+<li>List information about nodes</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="cluster_setup/1_ganeti-commands/5">
+<h1><code>gnt-instance</code></h1>
+
+<ul>
+<li>Per-instance configuration/administration</li>
+<li>Add, remove, rename, &amp; reinstall instance</li>
+<li>Serial console</li>
+<li>Fail-over instance, change secondary</li>
+<li>Stop, start, migrate instance</li>
+<li>List instance information</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="cluster_setup/1_ganeti-commands/6">
+<h1><code>gnt-backup</code></h1>
+
+<ul>
+<li>Export instance to an image</li>
+<li>Import instance from an exported image</li>
+<li>Useful for inter-cluster migration</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content commandline smaller-img center" ref="cluster_setup/2_cluster-creation/1">
+<h1>Cluster creation</h1>
+
+<p><img src="file/cluster_setup/cluster-creation.png" alt="cluster-creation"/></p>
+
+<pre><code><code class="command">$ gnt-cluster init \</code><code class="result">
+      --master-netdev=br42 \
+      -g ganeti -s 10.1.11.200 \
+      --enabled-hypervisors=kvm \
+      -N link=br113 \
+      -B vcpus=2,memory=512M \
+      -H kvm:kernel_path=/boot/guest/vmlinuz-x86_64 \
+      ganeti-cluster.osuosl.org
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content commandline center incremental" ref="cluster_setup/2_cluster-creation/2">
+<h1>Adding nodes</h1>
+
+<p><img src="file/cluster_setup/adding-nodes.png" alt="adding-nodes"/></p>
+
+<pre><code><code class="command">$ gnt-node add -s 10.1.11.201 node2</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content commandline center incremental" ref="cluster_setup/2_cluster-creation/3">
+<h1>Listing nodes</h1>
+
+<p><img src="file/cluster_setup/adding-nodes.png" alt="adding-nodes"/></p>
+
+<pre><code><code class="command">$ gnt-node list</code><code class="result">
+Node          DTotal  DFree MTotal MNode MFree Pinst Sinst
+g1.osuosl.bak 673.9G 251.8G  23.6G 14.5G 14.0G    16    16
+g2.osuosl.bak 673.9G 204.9G  23.6G 15.5G 14.2G    15    16
+g3.osuosl.bak 673.9G 200.6G  23.6G 16.8G 13.3G    16    16
+g4.osuosl.bak 673.9G 154.8G  23.6G 16.4G 15.4G    16    15
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content commandline incremental" ref="cluster_setup/2_cluster-creation/4">
+<h1>Cluster verification</h1>
+
+<p><img src="file/cluster_setup/adding-nodes.png" alt="adding-nodes"/></p>
+
+<pre><code><code class="command">$ gnt-cluster verify</code><code class="result">
+Wed Jun  2 17:31:07 2010 * Verifying global settings
+Wed Jun  2 17:31:08 2010 * Gathering data (4 nodes)
+Wed Jun  2 17:31:09 2010 * Verifying node status
+Wed Jun  2 17:31:09 2010 * Verifying instance status
+Wed Jun  2 17:31:09 2010 * Verifying orphan volumes
+Wed Jun  2 17:31:09 2010 * Verifying oprhan instances
+Wed Jun  2 17:31:09 2010 * Verifying N+1 Memory redundancy
+Wed Jun  2 17:31:09 2010 * Other Notes
+Wed Jun  2 17:31:09 2010 * Hooks Results
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content commandline small" ref="cluster_setup/2_cluster-creation/5">
+<h1>Cluster information</h1>
+
+<pre><code><code class="command">$ gnt-cluster info</code><code class="result">
+Cluster name: ganeti-test.osuosl.bak
+Cluster UUID: a22576ba-9158-4336-8590-a497306f84b9
+Creation time: 2010-04-08 00:08:29
+Modification time: 2010-05-07 22:33:34
+Master node: gtest1.osuosl.bak
+Architecture (this node): 64bit (x86_64)
+Tags: (none)
+Default hypervisor: kvm
+Enabled hypervisors: kvm
+Hypervisor parameters:
+  - kvm:
+      acpi: True
+      boot_order: disk
+      cdrom_image_path: 
+      disk_cache: default
+      disk_type: paravirtual
+      initrd_path: 
+      kernel_args: ro
+      kernel_path: /boot/guest/vmlinuz-x86_64-hardened
+      kvm_flag: 
+      migration_port: 8102
+      nic_type: paravirtual
+      root_path: /dev/vda2
+      security_domain: 
+      security_model: none
+      serial_console: True
+      usb_mouse: 
+      use_localtime: False
+      vnc_bind_address: 0.0.0.0
+      vnc_password_file: 
+      ....
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content commandline center incremental small" ref="instances/1_instance-commands/1">
+<h1>Creating an instance</h1>
+
+<p><img src="file/instances/creating-instance.png" alt="creating-instance"/></p>
+
+<pre><code><code class="command">$ gnt-instance add -t drbd -n node3:node2 \</code><code class="result">
+</code><code class="command">$    -s 10G -o image+gentoo-hardened-cf \</code><code class="result">
+</code><code class="command">$    --net 0:link=br42  web.example.org</code><code class="result">
+* creating instance disks...
+adding instance web.example.org to cluster config
+ - INFO: Waiting for instance web.example.org to sync disks.
+ - INFO: - device disk/0:  3.90% done, 205 estimated seconds remaining
+ - INFO: - device disk/0: 29.40% done, 101 estimated seconds remaining
+ - INFO: - device disk/0: 54.90% done, 102 estimated seconds remaining
+ - INFO: - device disk/0: 80.40% done, 41 estimated seconds remaining
+ - INFO: - device disk/0: 98.40% done, 3 estimated seconds remaining
+ - INFO: - device disk/0: 100.00% done, 0 estimated seconds remaining
+ - INFO: Instance web.example.org's disks are in sync.
+* running the instance OS create scripts...
+* starting instance...
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content commandline small" ref="instances/1_instance-commands/2">
+<h1>List all instances</h1>
+
+<pre><code><code class="command">$ gnt-instance list</code><code class="result">
+Instance      OS                 Primary_node  Status  Memory
+monkeyhttpd   image+ubuntu-lucid g2.osuosl     running 512M
+mozdev-stats  image+manual       g3.osuosl     running 512M
+mulgara       image+manual       g4.osuosl     running 512M
+musicbrainzvm image+manual       g2.osuosl     running 512M
+myrtle        image+manual       g1.osuosl     running 512M
+olpc          image+manual       g3.osuosl     running 512M
+openberry     image+manual       g1.osuosl     running 512M
+openclipfont  image+manual       g4.osuosl     running 512M
+openht        image+manual       g4.osuosl     running 512M
+openmrs       image+manual       g1.osuosl     running 512M
+openvoting    image+manual       g2.osuosl     running 512M
+osi           image+manual       g4.osuosl     running 256M
+parrotvm      image+manual       g1.osuosl     running 512M
+pcc           image+manual       g1.osuosl     running 512M
+pdxplumbers   image+manual       g2.osuosl     running 512M
+polk          image+manual       g4.osuosl     running 512M
+puffin        image+manual       g3.osuosl     running 256M
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content commandline" ref="instances/1_instance-commands/3">
+<h1>Other instance commands</h1>
+
+<pre><code><code class="command">$ gnt-instance console web</code><code class="result">
+
+</code><code class="command">$ gnt-instance migrate web</code><code class="result">
+
+</code><code class="command">$ gnt-instance failover web</code><code class="result">
+
+</code><code class="command">$ gnt-instance reinstall -o image+ubuntu-lucid web</code><code class="result">
+
+</code><code class="command">$ gnt-instance info web</code><code class="result">
+
+</code><code class="command">$ gnt-instance list</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content smbullets" ref="instances/2_instance-image/1">
+<h1>Guest OS Installation</h1>
+
+<ul>
+<li>Bash scripts</li>
+<li>Format, mkfs, mount, install OS</li>
+<li>Hooks</li>
+</ul>
+
+
+<h2>OS Definitions</h2>
+
+<ul>
+<li>debootstrap</li>
+<li>Disk image</li>
+<li>Other OS-specific</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="instances/2_instance-image/2">
+<h1><code>ganeti-instance-image</code></h1>
+
+<h3>http://code.osuosl.org/projects/ganeti-image</h3>
+
+<ul>
+<li>Disk image based (filesystem dump or tarball)</li>
+<li>Flexible OS support</li>
+<li>Fast instance deployment ( ~30 seconds)</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="instances/2_instance-image/3">
+<h1><code>ganeti-instance-image</code></h1>
+
+<ul>
+<li>Setup serial for grub, grub2, &amp; login prompt</li>
+<li>Automatic networking setup (DHCP or static)</li>
+<li>Automatic ssh hostkey regen</li>
+<li>Add optional kernel parameters to grub</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content center" ref="failure_examples/1_node-failure/1">
+<h1>Primary node failure</h1>
+
+<p><img src="file/failure_examples/primary-failure.png" alt="primary-failure"/></p></div>
+</div><div class="slide" data-transition="fade"><div class="content center" ref="failure_examples/1_node-failure/2">
+<h1>Primary node failure</h1>
+
+<p><img src="file/failure_examples/primary-failover.png" alt="primary-failover"/></p>
+
+<pre><code>$ gnt-instance failover --ignore-consistency web
+</code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content center" ref="failure_examples/1_node-failure/3">
+<h1>Secondary node failure</h1>
+
+<p><img src="file/failure_examples/secondary-failover.png" alt="secondary-failover"/></p>
+
+<pre><code>$ gnt-instance replace-disks --on-secondary \
+    --new-secondary=node1 web
+</code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="other_tools/1_htools/1">
+<h1>Ganeti htools</h1>
+
+<ul>
+<li>Automatic allocation tools</li>
+<li>Cluster rebalancer - <strong><code>hbal</code></strong></li>
+<li>IAllocator plugin - <strong><code>hail</code></strong></li>
+<li>Cluster capacity estimator - <strong><code>hspace</code></strong></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content commandline" ref="other_tools/1_htools/2">
+<h1><strong><code>hbal</code></strong></h1>
+
+<pre><code><code class="command">$ hbal -m ganeti.osuosl.bak</code><code class="result">
+Loaded 4 nodes, 63 instances
+Initial check done: 0 bad nodes, 0 bad instances.
+Initial score: 0.53388595
+Trying to minimize the CV...
+    1. bonsai            g1:g2 =&gt; g2:g1 0.53220090 a=f
+    2. connectopensource g3:g1 =&gt; g1:g3 0.53114943 a=f
+    3. amahi             g2:g3 =&gt; g3:g2 0.53088116 a=f
+    4. mertan            g1:g2 =&gt; g2:g1 0.53031862 a=f
+    5. dspace            g3:g1 =&gt; g1:g3 0.52958328 a=f
+Cluster score improved from 0.53388595 to 0.52958328
+Solution length=5
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content commandline" ref="other_tools/1_htools/3">
+<h1><strong><code>hspace</code></strong></h1>
+
+<pre><code><code class="command">$ hspace --memory 512 --disk 10240 -m ganeti.osuosl.bak</code><code class="result">
+HTS_INI_INST_CNT=63
+
+HTS_FIN_INST_CNT=101
+
+HTS_ALLOC_INSTANCES=38
+HTS_ALLOC_FAIL_REASON=FAILDISK
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content commandline small" ref="other_tools/1_htools/4">
+<h1><strong><code>hail</code></strong></h1>
+
+<pre><code><code class="command">$ gnt-instance add -t drbd -I hail \</code><code class="result">
+</code><code class="command">$   -s 10G -o image+gentoo-hardened-cf \</code><code class="result">
+</code><code class="command">$   --net 0:link=br42  web.example.org \</code><code class="result">
+ - INFO: Selected nodes for instance web.example.org 
+         via iallocator hail: gtest1.osuosl.bak, gtest2.osuosl.bak
+* creating instance disks...
+adding instance web.example.org to cluster config
+ - INFO: Waiting for instance web.example.org to sync disks.
+ - INFO: - device disk/0:  3.60% done, 1149 estimated seconds remaining
+ - INFO: - device disk/0: 29.70% done, 144 estimated seconds remaining
+ - INFO: - device disk/0: 55.50% done, 88 estimated seconds remaining
+ - INFO: - device disk/0: 81.10% done, 47 estimated seconds remaining
+ - INFO: Instance web.example.org's disks are in sync.
+* running the instance OS create scripts...
+* starting instance...
+</code></code></pre></div>
+</div><div class="slide" data-transition="fade"><div class="content center small-img" ref="other_tools/2_ganeti-web">
+<h1>Ganeti Web</h1>
+
+<p><img src="file/other_tools/ganeti-web.png" alt="ganeti-web"/></p></div>
+</div><div class="slide" data-transition="fade"><div class="content smbullets" ref="osuosl_usage/usage/1">
+<h1>Ganeti usage at OSUOSL</h1>
+
+<ul>
+<li>4-node production OSUOSL cluster</li>
+<li>~65 virtual instances</li>
+<li>qemu-kvm 0.11.x</li>
+<li>64bit Gentoo Linux</li>
+</ul>
+
+
+<h2>Node details</h2>
+
+<ul>
+<li>4 x HP DL360 G4</li>
+<li>24G RAM</li>
+<li>630G - RAID5 6x146G 10K SCSI HDDs</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="osuosl_usage/usage/2">
+<h1>Project Ganeti clusters</h1>
+
+<ul>
+<li>OSGeo - 9 instances / 2 nodes</li>
+<li>OSDV - 5 instances / 3 nodes</li>
+<li>phpBB - 11 instances / 2 nodes</li>
+<li>ORVSD - 10 instances / 2 nodes</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content center" ref="osuosl_usage/usage/3">
+<h2>Xen + iSCSI vs. kvm + DRBD</h2>
+
+<p><img src="file/osuosl_usage/busybox.png" alt="busybox"/></p></div>
+</div><div class="slide" data-transition="fade"><div class="content center small-img-height" ref="osuosl_usage/usage/4">
+<h1>Ganeti node CPU usage</h1>
+
+<p><img src="file/osuosl_usage/g2-cpu.png" alt="g2-cpu"/></p></div>
+</div><div class="slide" data-transition="fade"><div class="content center" ref="osuosl_usage/usage/5">
+<h1>Ganeti node LOAD</h1>
+
+<p><img src="file/osuosl_usage/g2-load.png" alt="g2-load"/></p></div>
+</div><div class="slide" data-transition="fade"><div class="content center" ref="osuosl_usage/usage/6">
+<h1>Ganeti node DRBD network</h1>
+
+<p><img src="file/osuosl_usage/g2-eth1.png" alt="g2-eth1"/></p></div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="osuosl_usage/usage/7">
+<h1>OSUOSL future ganeti plans</h1>
+
+<ul>
+<li>KSM (Kernel SamePage Merging)</li>
+<li>Upgrade to qemu-kvm 0.12.x</li>
+<li>Migrate hosts from libvirt - DONE!</li>
+<li>Puppet integration</li>
+<li>Web-based tools</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="ganeti_roadmap/roadmap/1">
+<h1>Open source</h1>
+
+<ul>
+<li>http://code.google.com/p/ganeti/</li>
+<li>License: GPL v2</li>
+<li>Ganeti 1.2.0 - December 2007</li>
+<li>Ganeti 2.0.0 - May 2009</li>
+<li>Ganeti 2.1.0 - March 2010 / 2.1.6 current</li>
+<li>Ganeti 2.2.0~beta0 - June 2010</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="ganeti_roadmap/roadmap/2">
+<h1>Ganeti roadmap</h1>
+
+<ul>
+<li>Inter-cluster instance moves</li>
+<li>KVM security (currently in &gt;= 2.1.2.1)</li>
+<li>Cluster LVM support</li>
+<li>LXC (Linux containers)</li>
+<li>Job locking fixes</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content smbullets" ref="ending/ending/1">
+<h1>Resources</h1>
+
+<ul>
+<li>http://code.google.com/p/ganeti/ - main project website</li>
+<li>http://code.google.com/p/ganeti/downloads/ - Ganeti-FISL-2008.pdf</li>
+<li>http://code.osuosl.org/projects/ganeti-image</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="fade"><div class="content license center" ref="ending/ending/2">
+<h1>Questions?</h1>
+
+<h2>lance@osuosl.org</h2>
+
+<h2>@ramereth on twitter</h2>
+
+<h2>Ramereth on freenode</h2>
+
+<h2>blog: http://www.lancealbertson.com</h2>
+
+<h2>slides: http://tinyurl.com/linuxcon10-ganeti</h2>
+
+<h3>Presentation made with showoff</h3>
+
+<h3>(http://github.com/schacon/showoff)</h3>
+
+<p><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="file/ending/cc.png" title="Creative Commons License" alt="Creative Commons License"/></a>
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/">Creative Commons Attribution-Share Alike 3.0 United States License</a>.</p></div>
+</div><div class="slide" data-transition="fade"><div class="content bullets" ref="ending/ending/3">
+<h1>Demo</h1>
+
+<ul>
+<li>Create instance</li>
+<li>Migrate instance</li>
+<li>Fail-over instance</li>
+<li>Re-install instance</li>
+</ul>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try{
+    var pageTracker = _gat._getTracker("UA-7186407-1");
+    pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+</html>
