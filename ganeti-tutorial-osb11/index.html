@@ -74,12 +74,16 @@
 </div>
 
 <div id="slides" class="offscreen" style="display:none;">
-<div class="slide" data-transition="fade"><div class="content" ref="start/1_intro">
+<div class="slide" data-transition="none"><div class="content center" ref="start/1_intro">
 <h1>Hands on Virtualization with Ganeti</h1>
 
 <h2>Lance Albertson</h2>
 
-<h2>Peter Krenesky</h2></div>
+<h2>Peter Krenesky</h2>
+
+<h4>http://is.gd/osbganeti</h4>
+
+<h4>http://is.gd/osbganetipdf</h4></div>
 </div><div class="slide" data-transition="none"><div class="content bullets" ref="start/2_bios">
 <h1>About us</h1>
 
@@ -115,7 +119,7 @@
 <li>Built on top of <em>existing</em> OSS hypervisors</li>
 <li>Fast &amp; simple <em>recovery</em> after physical failures</li>
 <li>Using <em>cheap</em> commodity hardware</li>
-<li>Utilizes <em>local</em> storage</li>
+<li>Private <em>IaaS</em></li>
 </ul>
 </div>
 </div><div class="slide" data-transition="none"><div class="content bullets list" ref="introduction/2_project_history">
@@ -202,7 +206,7 @@
 <li>Hypervisor (called <code>hvparams</code>)</li>
 <li>General (called <code>beparams</code>)</li>
 <li>Networking (called <code>nicparams</code>)</li>
-<li>Modified via instance or cluster defaults</li>
+<li><em>Modified</em> via instance or cluster defaults</li>
 </ul>
 </div>
 </div><div class="slide" data-transition="none"><div class="content bullets list" ref="terminology/4_instance/3">
@@ -276,7 +280,7 @@
 <ul>
 <li><strong>Debian</strong> - most supported upstream</li>
 <li><strong>Gentoo</strong> - great support</li>
-<li>Ubuntu - should work great</li>
+<li><strong>Ubuntu</strong> - should work great</li>
 <li>CentOS - works but a few setup issues</li>
 </ul>
 </div>
@@ -287,7 +291,7 @@
 
 <ul>
 <li><em>Bridging</em> is most supported</li>
-<li>Depends on your <em>network</em></li>
+<li><em>Routed</em> networking also supported</li>
 <li>Nodes on <em>private NAT</em></li>
 </ul>
 </div>
@@ -304,8 +308,10 @@
 <li><em>Similar</em> hardware/software configuration across nodes</li>
 </ul>
 </div>
-</div><div class="slide" data-transition="none"><div class="content medtable" ref="preinstallation_steps/1_os_setup/2">
-<h1>Partition Layout</h1>
+</div><div class="slide" data-transition="none"><div class="content medtable rvc" ref="preinstallation_steps/1_os_setup/2">
+<h1>Partition Setup</h1>
+
+<h3>typical layout</h3>
 
 <table class="rdata">
     <tr class="odd">
@@ -344,12 +350,20 @@
 
 <ul>
 <li><em>Xen</em> 3.0 and above</li>
-<li><em>KVM</em> 72 or 0.11 and above</li>
+<li><em>KVM</em> 0.11 and above</li>
 <li>Install via your distro</li>
-<li>Reboot as necessary</li>
 </ul>
 </div>
-</div><div class="slide" data-transition="none"><div class="content bullets list" ref="preinstallation_steps/3_installing_drbd/1">
+</div><div class="slide" data-transition="none"><div class="content limg center bullets" ref="preinstallation_steps/3_installing_drbd/1">
+<h1>DRBD Architecture</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/preinstallation_steps/drbd.png" alt="drbd"/></p>
+
+<ul>
+<li>RAID1 over the network</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="preinstallation_steps/3_installing_drbd/2">
 <h1>Installing DRBD</h1>
 
 <ul>
@@ -360,10 +374,6 @@
 <li>Included in <em>mainline</em></li>
 </ul>
 </div>
-</div><div class="slide" data-transition="none"><div class="content limg center" ref="preinstallation_steps/3_installing_drbd/2">
-<h1>DRBD Architecture</h1>
-
-<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/preinstallation_steps/drbd.png" alt="drbd"/></p></div>
 </div><div class="slide" data-transition="none"><div class="content codeblock rvc" ref="preinstallation_steps/3_installing_drbd/3">
 <h1>DRBD Setup</h1>
 
@@ -537,8 +547,10 @@ iface br100 inet manual
 </div>
 </div><div class="slide" data-transition="none"><div class="content subsec" ref="installing_ganeti/3_install_instance_image/1">
 <h1>Install OS Definition</h1></div>
-</div><div class="slide" data-transition="none"><div class="content smbullets list" ref="installing_ganeti/3_install_instance_image/2">
+</div><div class="slide" data-transition="none"><div class="content smbullets list rvc" ref="installing_ganeti/3_install_instance_image/2">
 <h1>Instance creation scripts</h1>
+
+<h3>also known as OS Definitions</h3>
 
 <ul>
 <li>Requires Operating System installation script</li>
@@ -552,13 +564,13 @@ iface br100 inet manual
 
 <ul>
 <li><em>Variants</em> of the OS Definition</li>
-<li>Often used for <em>defining</em> operating system</li>
-<li>Different deployment settings
+<li>Used for <em>defining</em> guest operating system</li>
+<li>Types of deployment settings:
 
 <ul>
 <li>Filesystem</li>
-<li>Image type</li>
 <li>Image directory</li>
+<li>Image Name</li>
 </ul>
 </li>
 </ul>
@@ -672,9 +684,9 @@ iface br100 inet manual
 <h1>Testing/Viewing the nodes</h1>
 
 <pre><code><code class="command">$ gnt-node list</code><code class="result">
-Node              DTotal DFree MTotal MNode MFree Pinst Sinst
-node1.example.org 223.4G 96.4G   7.8G  5.4G  2.7G     0     0
-node2.example.org 223.4G 96.4G   7.8G  5.4G  2.7G     0     0
+Node              DTotal  DFree MTotal MNode MFree Pinst Sinst
+node1.example.org 223.4G 223.4G   7.8G  300M  7.5G     0     0
+node2.example.org 223.4G 223.4G   7.8G  300M  7.5G     0     0
 </code></code></pre>
 
 <ul>
@@ -865,13 +877,13 @@ State: configured to be up, actual state is up
 <h1>Restoring redundancy for DRBD-based instances</h1>
 
 <ul>
-<li>Primary node storage failed
+<li><em>Primary</em> node storage failed
 
 <ul>
 <li>Re-create disks on it</li>
 </ul>
 </li>
-<li>Secondary node storage failed
+<li><em>Secondary</em> node storage failed
 
 <ul>
 <li>Re-create disks on secondary node</li>
@@ -1064,8 +1076,10 @@ Commands to run to reach the above solution:
     echo job 1/1
     gnt-instance replace-disks -n g2 linuxfund
 </code></code></pre></div>
-</div><div class="slide" data-transition="none"><div class="content commandline incremental bigcode" ref="htools/1_examples/4">
+</div><div class="slide" data-transition="none"><div class="content commandline incremental bigcode rvc" ref="htools/1_examples/4">
 <h1><code>hspace</code></h1>
+
+<h3>Cluster planning</h3>
 
 <pre><code><code class="command">$ hspace --memory 512 --disk 10240 \</code><code class="result">
 </code><code class="command">$    -m ganeti.example.org</code><code class="result">
@@ -1329,7 +1343,7 @@ adding instance instance1.example.org to cluster config
 
 <p>http://github.com/ramereth/presentation-ganeti-tutorial</p>
 
-<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/">Creative Commons Attribution-Share Alike 3.0 United States License</a>.</p></div>
+<h4>http://is.gd/osbganeti | http://is.gd/osbganetipdf</h4></div>
 </div>
 </div>
 
