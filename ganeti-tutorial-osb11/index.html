@@ -1,0 +1,1337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Hands on Virtualization with Ganeti</title>
+
+  <link rel="stylesheet" href="./css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="./css/showoff.css" type="text/css"/>
+
+  <script type="text/javascript" src="./js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="./js/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src="./js/jquery-print.js"></script>
+  <script type="text/javascript" src="./js/jquery.batchImageLoad.js"></script>
+
+  <script type="text/javascript" src="./js/jquery.doubletap-0.1.js"></script>
+
+  <script type="text/javascript" src="./js/fg.menu.js"></script>
+  <script type="text/javascript" src="./js/showoff.js"></script>
+  <script type="text/javascript" src="./js/jTypeWriter.js"> </script>
+  <script type="text/javascript" src="./js/sh_main.min.js"></script>
+  <script type="text/javascript" src="./js/core.js"></script>
+  <script type="text/javascript" src="./js/showoffcore.js"></script>
+
+  <link type="text/css" href="./css/fg.menu.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/theme/ui.all.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/sh_style.css" rel="stylesheet" >
+
+  
+    <link rel="stylesheet" href="file/custom.css" type="text/css"/>
+  
+
+  
+    <script type="text/javascript" src="file/timer.js"></script>
+  
+
+  <script type="text/javascript">
+  $(function(){
+    setupPreso(false, './');
+  });
+  </script>
+</head>
+
+<body>
+
+
+<a tabindex="0" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="navmenu"><span class="ui-icon ui-icon-triangle-1-s"></span>slides</a>
+<div id="navigation" class="hidden"></div>
+
+<div id="help">
+  <table>
+    <tr><td class="key">space, &rarr;</td><td>next slide</td></tr>
+    <tr><td class="key">&larr;</td><td>previous slide</td></tr>
+    <tr><td class="key">d</td><td>debug mode</td></tr>
+    <tr><td class="key">## &lt;ret&gt;</td><td>go to slide #</td></tr>
+    <tr><td class="key">c</td><td>table of contents (vi)</td></tr>
+    <tr><td class="key">f</td><td>toggle footer</td></tr>
+    <tr><td class="key">r</td><td>reload slides</td></tr>
+    <tr><td class="key">z</td><td>toggle help (this)</td></tr>
+  </table>
+</div>
+
+<div class="buttonNav">
+  <input type="submit" onClick="prevStep();" value="prev"/>
+  <input type="submit" onClick="nextStep();" value="next"/>
+</div>
+
+<div id="preso">loading presentation...</div>
+<div id="footer">
+  <span id="slideInfo"></span>
+  <span id="debugInfo"></span>
+  <span id="notesInfo"></span>
+</div>
+
+<div id="slides" class="offscreen" style="display:none;">
+<div class="slide" data-transition="fade"><div class="content" ref="start/1_intro">
+<h1>Hands on Virtualization with Ganeti</h1>
+
+<h2>Lance Albertson</h2>
+
+<h2>Peter Krenesky</h2></div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="start/2_bios">
+<h1>About us</h1>
+
+<ul>
+<li>OSU Open Source Lab</li>
+<li>Server hosting for Open Source Projects</li>
+<li>Open Source development projects</li>
+<li><strong>Lance</strong> / Lead Systems Administrator</li>
+<li><strong>Peter</strong> / Lead Software Engineer</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="start/3_tutorial_overview">
+<h1>Tutorial Overview</h1>
+
+<ul>
+<li>Ganeti Architecture</li>
+<li>Installation</li>
+<li>Virtual machine deployment</li>
+<li>Cluster Management</li>
+<li>Dealing with failures</li>
+<li>Ganeti Web Manager</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content limg center" ref="introduction/1_basic_overview/1">
+<h1>Ganeti Cluster</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/introduction/ganeti-cluster.png" alt="ganeti-cluster"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="introduction/1_basic_overview/2">
+<h1>What is Ganeti?</h1>
+
+<ul>
+<li><em>Cluster</em> virtual server management software tool</li>
+<li>Built on top of <em>existing</em> OSS hypervisors</li>
+<li>Fast &amp; simple <em>recovery</em> after physical failures</li>
+<li>Using <em>cheap</em> commodity hardware</li>
+<li>Utilizes <em>local</em> storage</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="introduction/2_project_history">
+<h1>Project Background</h1>
+
+<ul>
+<li><em>Google</em> funded project</li>
+<li>Used in internal corporate env</li>
+<li>Open Sourced in 2007 <em>GPLv2</em></li>
+<li>Team based in Google Switzerland</li>
+<li>Active mailing list &amp; IRC channel</li>
+<li>Started internally before <em>libvirt</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="terminology/0_intro">
+<h1>Terminology</h1></div>
+</div><div class="slide" data-transition="none"><div class="content S bullets sm-vert-img right-img" ref="terminology/1_components">
+<h1>Components</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/terminology/components.png" alt="components"/></p>
+
+<ul>
+<li>Python</li>
+<li>various python modules</li>
+<li>Haskell</li>
+<li>DRBD</li>
+<li>LVM</li>
+<li>Hypervisor</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="terminology/2_terminology">
+<h1>Architecture</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/terminology/ganeti-cluster.png" alt="ganeti-cluster"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="terminology/3_node/1">
+<h1>Nodes</h1>
+
+<ul>
+<li><em>Physical</em> machine</li>
+<li>Fault tolerance not <em>required</em></li>
+<li>Added/removed <em>at will</em> from cluster</li>
+<li>No <em>data loss</em> with loss of node</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none">
+  <div class="content redcode medtable" ref="terminology/3_node/2">
+<h1>Node Daemons</h1>
+
+<table class="rdata">
+    <tr class="odd">
+        <td><code><b>ganeti-noded</b></code></td>
+        <td>control hardware resources, runs on all</td>
+    </tr>
+    <tr class="even">
+        <td><code><b>ganeti-confd<b/></b>
+        <td>only functional on master, runs on all</td>
+    </code>
+    <tr class="odd">
+        <td><code><b>ganeti-rapi<b/></b>
+        <td>offers HTTP-based API for cluster, runs on master</td>
+    </code>
+    <tr class="even">
+        <td><code><b>ganeti-masterd</b></code></td>
+        <td>allows control of cluster, runs on master</td>
+    </tr>
+</td>
+</tr>
+</td>
+</tr></table></div>
+</div><div class="slide" data-transition="none"><div class="content center bullets list smimg smtitle" ref="terminology/4_instance/1">
+<h1>Instances</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/terminology/instances.png" alt="instances"/></p>
+
+<ul>
+<li>Virtual machine that <em>runs</em> on the cluster</li>
+<li><em>fault tolerant/HA</em> entity within cluster</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets redcode list" ref="terminology/4_instance/2">
+<h1>Instance Parameters</h1>
+
+<ul>
+<li>Hypervisor (called <code>hvparams</code>)</li>
+<li>General (called <code>beparams</code>)</li>
+<li>Networking (called <code>nicparams</code>)</li>
+<li>Modified via instance or cluster defaults</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="terminology/4_instance/3">
+<h1>Disk template</h1>
+
+<ul>
+<li><strong>drbd</strong> : LVM + DRBD between 2 nodes</li>
+<li><strong>plain</strong> : LVM w/ no redundancy</li>
+<li><strong>file</strong> : Plain files, no redundancy</li>
+<li><strong>diskless</strong> : Special purposes</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list redcode" ref="terminology/5_other/1">
+<h1>IAllocator</h1>
+
+<ul>
+<li>Automatic placement of instances</li>
+<li>Eliminates manual node specification</li>
+<li><strong>htools</strong></li>
+<li>External scripts used to compute</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smtitle bullets list himg center" ref="terminology/5_other/2">
+<h1><em>Primary</em> &amp; <em>Secondary</em> concepts</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/terminology/primary-secondary.png" alt="primary-secondary"/></p>
+
+<ul>
+<li>Instances always runs on <em>primary</em></li>
+<li>Uses secondary node for <em>disk replication</em></li>
+<li>Depends on <em>disk template</em> (i.e. drbd)</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="planning_your_cluster/0_intro">
+<h1>Planning your cluster</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets rvc" ref="planning_your_cluster/1_hardware_planning/1">
+<h1>Hardware Planning</h1>
+
+<h2><em>Disks</em></h2>
+
+<ul>
+<li><strong>Types:</strong> SAS vs SATA</li>
+<li><strong>Speed:</strong> Faster = better</li>
+<li><strong>Number:</strong> More = better</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets rvc" ref="planning_your_cluster/1_hardware_planning/2">
+<h1>Hardware Planning</h1>
+
+<h2><em>CPU</em></h2>
+
+<ul>
+<li><strong>Cores:</strong> More = better</li>
+<li><strong>Speed:</strong> Depends on your uses</li>
+<li><strong>Brand:</strong> AMD vs Intel = use case</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets rvc" ref="planning_your_cluster/1_hardware_planning/3">
+<h1>Hardware Planning</h1>
+
+<h2><em>RAM</em></h2>
+
+<ul>
+<li><strong>Amount:</strong> More = better</li>
+<li><strong>Use case:</strong> Types of services</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="planning_your_cluster/2_operating_system">
+<h1>Operating System Planning</h1>
+
+<ul>
+<li><strong>Debian</strong> - most supported upstream</li>
+<li><strong>Gentoo</strong> - great support</li>
+<li>Ubuntu - should work great</li>
+<li>CentOS - works but a few setup issues</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets center himg" ref="planning_your_cluster/3_network">
+<h1>Network Planning</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/planning_your_cluster/networking.png" alt="networking"/></p>
+
+<ul>
+<li><em>Bridging</em> is most supported</li>
+<li>Depends on your <em>network</em></li>
+<li>Nodes on <em>private NAT</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec smtitle" ref="preinstallation_steps/0_intro">
+<h1>Pre-Installation Steps</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list smtitle" ref="preinstallation_steps/1_os_setup/1">
+<h1>Operating System Setup</h1>
+
+<ul>
+<li>Clean ,minimal system install</li>
+<li>Minimum <em>20GB</em> system volume</li>
+<li><em>Single</em> LVM Volume Group for instances</li>
+<li>64bit is preferred</li>
+<li><em>Similar</em> hardware/software configuration across nodes</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content medtable" ref="preinstallation_steps/1_os_setup/2">
+<h1>Partition Layout</h1>
+
+<table class="rdata">
+    <tr class="odd">
+        <td>/dev/sda1</td>
+        <td>/boot</td>
+        <td>200M</td>
+    </tr>
+    <tr class="even">
+        <td>/dev/sda2</td>
+        <td>/</td>
+        <td>10-20G</td>
+    </tr>
+    <tr class="odd">
+        <td>/dev/sda3</td>
+        <td>LVM</td>
+        <td>rest, named ganeti</td>
+    </tr>
+</table>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list redcode" ref="preinstallation_steps/1_os_setup/3">
+<h1>Hostname Issues</h1>
+
+<ul>
+<li>Requires <em>hostname</em> to be the <strong>FQDN</strong></li>
+<li>i.e. <em>node1.example.com</em> instead of <em>node1</em></li>
+<li><code>hostname --fqdn</code> requires resolver library</li>
+<li>Reduce dependency on DNS and <em>guessing</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="preinstallation_steps/2_installing_hypervisor/1">
+<h1>Installing the Hypervisor</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets rvc smtitle" ref="preinstallation_steps/2_installing_hypervisor/2">
+<h1>Hypervisor requirements</h1>
+
+<h3><strong>Mandatory</strong> on all nodes</h3>
+
+<ul>
+<li><em>Xen</em> 3.0 and above</li>
+<li><em>KVM</em> 72 or 0.11 and above</li>
+<li>Install via your distro</li>
+<li>Reboot as necessary</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="preinstallation_steps/3_installing_drbd/1">
+<h1>Installing DRBD</h1>
+
+<ul>
+<li>Required for <em>high availability</em></li>
+<li>Can <em>upgrade</em> non-HA to DRBD later</li>
+<li>Need at least <em>&gt;=drbd-8.0.12</em></li>
+<li>Depends on distro Support</li>
+<li>Included in <em>mainline</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content limg center" ref="preinstallation_steps/3_installing_drbd/2">
+<h1>DRBD Architecture</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/preinstallation_steps/drbd.png" alt="drbd"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content codeblock rvc" ref="preinstallation_steps/3_installing_drbd/3">
+<h1>DRBD Setup</h1>
+
+<h3>Installation</h3>
+
+<pre><code>$ apt-get install drbd8-utils
+</code></pre>
+
+<h3>Via modules</h3>
+
+<pre><code>$ echo drbd minor_count=255 usermode_helper=/bin/true &gt;&gt; /etc/modules
+$ depmod -a
+$ modprobe drbd minor_count=255 usermode_helper=/bin/true
+</code></pre>
+
+<h3>Via Grub</h3>
+
+<pre><code># Kernel Commands
+drbd.minor_count=255 drbd.usermode_helper=/bin/true
+</code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="preinstallation_steps/4_network_setup/1">
+<h1>Network Setup</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets center himg" ref="preinstallation_steps/4_network_setup/2">
+<h1>Interface Layout</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/preinstallation_steps/networking.png" alt="networking"/></p>
+
+<ul>
+<li><strong>eth0</strong> - trunked VLANs</li>
+<li><strong>eth1</strong> - private DRBD network</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content codeblock bigcode rvc" ref="preinstallation_steps/4_network_setup/3">
+<h1>VLAN setup</h1>
+
+<h3>for Debian/Ubuntu</h3>
+
+<pre><code>allow-hotplug eth0
+allow-hotplug eth1
+allow-hotplug vlan100
+allow-hotplug vlan42
+
+auto vlan100
+iface vlan100 inet manual
+    vlan_raw_device eth0
+
+auto vlan42
+iface vlan42 inet manual
+    vlan_raw_device eth0
+</code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content codeblock rvc" ref="preinstallation_steps/4_network_setup/4">
+<h1>Bridge setup</h1>
+
+<h3>for Debian/Ubuntu</h3>
+
+<pre><code>allow-hotplug br42
+allow-hotplug br10
+
+auto br42
+iface br42 inet static
+   address 10.1.0.140
+   netmask 255.255.254.0
+   network 10.1.0.0
+   broadcast 10.1.1.255
+   gateway 10.1.0.1
+   dns-nameservers 10.1.0.130
+   dns-search example.org
+   bridge_ports vlan42
+   bridge_stp off
+   bridge_fd 0
+
+auto br100
+iface br100 inet manual
+   bridge_ports vlan100
+   bridge_stp off
+   bridge_fd 0
+</code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content codeblock bigcode rvc" ref="preinstallation_steps/4_network_setup/5">
+<h1>DRBD Network setup</h1>
+
+<h3>for Debian/Ubuntu</h3>
+
+<pre><code>iface eth1 inet static
+    address 192.168.16.140
+    netmask 255.255.255.0
+    network 192.168.16.0
+    broadcast 192.168.16.255
+</code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode" ref="preinstallation_steps/5_configuring_lvm/1">
+<h1>Configuring LVM</h1>
+
+<pre><code><code class="command">$ pvcreate /dev/sda3</code><code class="result">
+</code><code class="command">$ vgcreate ganeti /dev/sda3</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content codeblock bigcode rvc" ref="preinstallation_steps/5_configuring_lvm/2">
+<h1>lvm.conf changes</h1>
+
+<h3>Ignore drbd devices</h3>
+
+<pre><code>filter = ["r|/dev/cdrom|", "r|/dev/drbd[0-9]+|" ]
+</code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="installing_ganeti/0_intro">
+<h1>Installing Ganeti</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="installing_ganeti/1_installing_deps/1">
+<h1>Installation Options</h1>
+
+<ul>
+<li>Via package manager</li>
+<li>Via source</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode rvc" ref="installing_ganeti/1_installing_deps/2">
+<h1>Installing Ganeti Dependencies</h1>
+
+<h3>via source</h3>
+
+<pre><code><code class="command">$ apt-get install lvm2 ssh bridge-utils \</code><code class="result">
+    iproute iputils-arping ndisc6 python \
+    python-pyopenssl openssl \
+    python-pyparsing python-simplejson \
+    python-pyinotify python-pycurl socat
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode rvc" ref="installing_ganeti/1_installing_deps/3">
+<h1>Htools Dependencies</h1>
+
+<h3>provides IAllocator <em>hail</em></h3>
+
+<pre><code><code class="command">$ apt-get install ghc6 libghc6-json-dev \</code><code class="result">
+    libghc6-network-dev \
+    libghc6-parallel-dev libghc6-curl-dev
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental bigcode" ref="installing_ganeti/2_installing_ganeti/1">
+<h1>Install Ganeti</h1>
+
+<pre><code><code class="command">$ ./configure --localstatedir=/var \</code><code class="result">
+    --sysconfdir=/etc \
+    --enable-htools
+</code><code class="command">$ make</code><code class="result">
+</code><code class="command">$ make install</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental redcode medcode" ref="installing_ganeti/2_installing_ganeti/2">
+<h1>Startup Scripts</h1>
+
+<h3>Installed into <code>/usr/local/</code></h3>
+
+<pre><code><code class="command">$ cp doc/examples/ganeti.initd /etc/init.d/ganeti</code><code class="result">
+</code><code class="command">$ update-rc.d ganeti defaults 20 80</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline bullets list medcode" ref="installing_ganeti/2_installing_ganeti/3">
+<h1><code>ganeti-watcher</code></h1>
+
+<pre><code><code class="command">$ cp doc/examples/ganeti.cron /etc/cron.d/ganeti</code><code class="result">
+</code></code></pre>
+
+<ul>
+<li><em>Automatically</em> restarts failed instances</li>
+<li>Restarts <em>failed</em> secondary storage</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smbullets list redcode" ref="installing_ganeti/2_installing_ganeti/4">
+<h1>What gets installed</h1>
+
+<ul>
+<li>Python libraries under the <em>ganeti</em> namespace</li>
+<li>Set of programs under <code>/usr/local/sbin</code> or <code>/usr/sbin</code></li>
+<li>Set of tools under <code>lib/ganeti/tools</code> directory</li>
+<li>IAllocator scripts under <code>lib/ganeti/tools directory</code></li>
+<li><em>Cron job</em> needed for cluster maintenance</li>
+<li><em>Init script</em> for Ganeti daemons</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="installing_ganeti/3_install_instance_image/1">
+<h1>Install OS Definition</h1></div>
+</div><div class="slide" data-transition="none"><div class="content smbullets list" ref="installing_ganeti/3_install_instance_image/2">
+<h1>Instance creation scripts</h1>
+
+<ul>
+<li>Requires Operating System installation script</li>
+<li>Provide scripts to deploy various operating systems</li>
+<li><em>Ganeti Instance Deboostrap</em> - upstream supported</li>
+<li><em>Ganeti Instance Image</em> - written by me</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="installing_ganeti/3_install_instance_image/3">
+<h1>OS Variants</h1>
+
+<ul>
+<li><em>Variants</em> of the OS Definition</li>
+<li>Often used for <em>defining</em> operating system</li>
+<li>Different deployment settings
+
+<ul>
+<li>Filesystem</li>
+<li>Image type</li>
+<li>Image directory</li>
+</ul>
+</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode smtitle" ref="installing_ganeti/3_install_instance_image/4">
+<h1>Install Instance Image Dependencies</h1>
+
+<pre><code><code class="command">$ apt-get install dump qemu-kvm kpartx</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental bigcode" ref="installing_ganeti/3_install_instance_image/5">
+<h1>Install Instance Image</h1>
+
+<pre><code><code class="command">$ ./configure --prefix=/usr \</code><code class="result">
+    --localstatedir=/var \
+    --sysconfdir=/etc \
+    --with-os-dir=/srv/ganeti/os
+</code><code class="command">$ make</code><code class="result">
+</code><code class="command">$ make install</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content bullets redcode" ref="installing_ganeti/3_install_instance_image/6">
+<h1>Creating images</h1>
+
+<ul>
+<li>Manually install/setup guest</li>
+<li>Shutdown guest</li>
+<li>Create filesystem <em>dump</em> or <em>tarball</em></li>
+<li>Place in <code>IMAGE_DIR</code></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="installing_ganeti/4_initialize_ganeti/1">
+<h1>Initialize Ganeti</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list redcode rvc" ref="installing_ganeti/4_initialize_ganeti/2">
+<h1>Cluster name</h1>
+
+<h3><strong>Mandatory</strong> once per cluster, on the first node.</h3>
+
+<ul>
+<li>Cluster hostname <em>resolvable</em> by all nodes</li>
+<li>IP reserved <strong>exclusively</strong> for the cluster</li>
+<li>Used by <em>master</em> node</li>
+<li>i.e.: <code>ganeti-prod.example.org</code></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline rvc medcode" ref="installing_ganeti/4_initialize_ganeti/3">
+<h1>Initialization</h1>
+
+<h3>KVM example</h3>
+
+<pre><code><code class="command">$ gnt-cluster init \</code><code class="result">
+    --master-netdev=br42 \
+    --vg-name ganeti \
+    --secondary-ip 192.168.16.140 \
+    --enabled-hypervisors=kvm \
+    --nic-parameters link=br100 \
+    --backend-parameters \
+        vcpus=2,memory=512M \
+    --hypervisor-parameters \
+        kvm:kernel_path=/boot/guest/vmlinuz \
+        vnc_bind_address=0.0.0.0 \
+    ganeti-prod.example.org
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content codeblock rvc bigcode smtitle" ref="installing_ganeti/4_initialize_ganeti/4">
+<h1>Cluster init args</h1>
+
+<h3>Master Network Device</h3>
+
+<pre><code>--master-netdev=br42
+</code></pre>
+
+<h3>Volume Group Name</h3>
+
+<pre><code>--vg-name ganeti
+</code></pre>
+
+<h3>DRBD Interface</h3>
+
+<pre><code>--secondary-ip 192.168.16.140
+</code></pre>
+
+<h3>Enabled Hypervisors</h3>
+
+<pre><code>--enabled-hypervisors=kvm
+</code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content codeblock rvc bigcode smtitle" ref="installing_ganeti/4_initialize_ganeti/5">
+<h1>Cluster init args</h1>
+
+<h3>Default NIC</h3>
+
+<pre><code>--nic-parameters link=br100
+</code></pre>
+
+<h3>Default Backend parameters</h3>
+
+<pre><code>--backend-parameters vcpus=2,memory=512M
+</code></pre>
+
+<h3>Default Hypervisor Parameters</h3>
+
+<pre><code>--hypervisor-parameters \
+    kvm:kernel_path=/boot/guest/vmlinuz-guest, \
+    vnc_bind_address=0.0.0.0 \
+</code></pre>
+
+<h3>Cluster hostname</h3>
+
+<pre><code>ganeti-prod.example.org
+</code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="installing_ganeti/5_post_install/1">
+<h1>Post-install Steps</h1></div>
+</div><div class="slide" data-transition="none"><div class="content commandline bullets list rvc" ref="installing_ganeti/5_post_install/2">
+<h1>Testing/Viewing the nodes</h1>
+
+<pre><code><code class="command">$ gnt-node list</code><code class="result">
+Node              DTotal DFree MTotal MNode MFree Pinst Sinst
+node1.example.org 223.4G 96.4G   7.8G  5.4G  2.7G     0     0
+node2.example.org 223.4G 96.4G   7.8G  5.4G  2.7G     0     0
+</code></code></pre>
+
+<ul>
+<li>Ganeti damons can talk to each other</li>
+<li>Ganeti can examine storage on the nodes <em>(DTotal/DFree)</em></li>
+<li>Ganeti can talk to the selected hypervisor <em>(MTotal/MNode/MFree)</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline bullets list" ref="installing_ganeti/5_post_install/3">
+<h1>Cluster burnin testing</h1>
+
+<pre><code><code class="command">$ /usr/lib/ganeti/tools/burnin -o image -p instance{1..5}</code><code class="result">
+</code></code></pre>
+
+<ul>
+<li>Does the <em>hardware</em> work?</li>
+<li>Can the <em>Hypervisor</em> create instances?</li>
+<li>Does each <em>operation</em> work properly?</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec smtitle" ref="instance_management/0_intro">
+<h1>Instance Management</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list rvc redcode" ref="instance_management/1_adding/1">
+<h1>Adding an instance</h1>
+
+<h3>Requires at least 5 params</h3>
+
+<ul>
+<li>OS for the instance (<code>gnt-os list</code>)</li>
+<li>Disk template</li>
+<li>Disk count &amp; size</li>
+<li>Node or iallocator</li>
+<li>Instance name (<em>resolvable</em>)</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode" ref="instance_management/1_adding/2">
+<h1>Add Command</h1>
+
+<pre><code><code class="command">$ gnt-instance add \</code><code class="result">
+    -n TARGET_NODE:SECONDARY_NODE \
+    -o OS_TYPE \
+    -t DISK_TEMPLATE -s DISK_SIZE \
+    INSTANCE_NAME
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list redcode rvc" ref="instance_management/1_adding/3">
+<h1>Other options</h1>
+
+<h3>among others</h3>
+
+<ul>
+<li>Memory size (<code>-B memory=1GB</code>)</li>
+<li>Number of virtual CPUs (<code>-B vcpus=4</code>)</li>
+<li>NIC settings (<code>--nic 0:link=br100</code>)</li>
+<li><code>batch-create</code></li>
+<li>See <code>gnt-instance</code> manpage for others</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode" ref="instance_management/2_removal">
+<h1>Instance Removal</h1>
+
+<pre><code><code class="command">$ gnt-instance remove INSTANCE_NAME</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode bullets" ref="instance_management/3_startup">
+<h1>Startup/Shutdown</h1>
+
+<pre><code><code class="command">$ gnt-instance startup INSTANCE_NAME</code><code class="result">
+</code><code class="command">$ gnt-instance shutdown INSTANCE_NAME</code><code class="result">
+</code></code></pre>
+
+<ul>
+<li>Started automatically</li>
+<li>Do not use hypervisor directly</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="instance_management/4_querying/1">
+<h1>Querying Instances</h1>
+
+<ul>
+<li><strong>Two methods:</strong>
+
+<ul>
+<li>listing instances</li>
+<li>detailed instance information</li>
+</ul>
+</li>
+<li>One useful for grep</li>
+<li>Other has more details, slower</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline tiny smcommandline" ref="instance_management/4_querying/2">
+<h1>Listing instances</h1>
+
+<pre><code><code class="command">$ gnt-instance list</code><code class="result">
+Instance                  Hypervisor OS                          Primary_node      Status     Memory
+instance1.example.org     kvm        image+gentoo-hardened       node1.example.org ERROR_down      -
+instance2.example.org     kvm        image+centos                node2.example.org running      512M
+instance3.example.org     kvm        image+debian-squeeze        node1.example.org running      512M
+instance4.example.org     kvm        image+ubuntu-lucid          node2.example.org running      512M
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline smcommandline tiny smtitle" ref="instance_management/4_querying/3">
+<h1>Detailed Instance Info</h1>
+
+<pre><code><code class="command">$ gnt-instance info instance2</code><code class="result">
+Instance name: instance2.example.org
+UUID: 5b5b1c35-23de-45bf-b125-a9a001b2bebb
+Serial number: 22
+Creation time: 2011-05-24 23:05:44
+Modification time: 2011-06-15 21:39:12
+State: configured to be up, actual state is up
+  Nodes:   
+    - primary: node2.example.org
+    - secondaries: 
+  Operating system: image+centos
+  Allocated network port: 11013
+  Hypervisor: kvm
+    - console connection: vnc to node2.example.org:11013 (display 5113)
+    - acpi: True
+    ...
+  Hardware:
+    - VCPUs: 2
+    - memory: 512MiB
+    - NICs:
+      - nic/0: MAC: aa:00:00:39:4b:b5, IP: None, mode: bridged, link: br113
+  Disk template: plain
+  Disks:
+    - disk/0: lvm, size 9.8G
+      access mode: rw
+      logical_id:  ganeti/0c3f6913-cc3d-4132-bbbf-af9766a7cde3.disk0
+      on primary:  /dev/ganeti/0c3f6913-cc3d-4132-bbbf-af9766a7cde3.disk0 (252:3)
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline medcode bullets" ref="instance_management/5_import_export/1">
+<h1>Export/Import</h1>
+
+<pre><code><code class="command">$ gnt-backup export -n TARGET_NODE INSTANCE_NAME</code><code class="result">
+</code></code></pre>
+
+<ul>
+<li>Create <em>snapshot</em> of disk &amp; configuration</li>
+<li>Backup, or import into another cluster</li>
+<li><em>One</em> snapshot for an instance</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode" ref="instance_management/5_import_export/2">
+<h1>Importing an instance</h1>
+
+<pre><code><code class="command">$ gnt-backup import \</code><code class="result">
+    -n TARGET_NODE \
+    --src-node=NODE \
+    --src-dir=DIR INSTANCE_NAME
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline medcode smbullets list" ref="instance_management/6_import_foreign">
+<h1>Import of foreign instances</h1>
+
+<pre><code><code class="command">$ gnt-instance add -t plain -n HOME_NODE ... \</code><code class="result">
+    --disk 0:adopt=lv_name[,vg=vg_name] \
+    INSTANCE_NAME
+</code></code></pre>
+
+<ul>
+<li>Already stored as LVM volumes</li>
+<li>Ensure non-managed instance is stopped</li>
+<li>Take over given logical volumes</li>
+<li>Better transition</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode rvc" ref="instance_management/7_console">
+<h1>Instance Console</h1>
+
+<pre><code><code class="command">$ gnt-instance console INSTANCE_NAME</code><code class="result">
+</code></code></pre>
+
+<h3>Type <code>^]</code> when done, to exit.</h3></div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="instance_ha_features/0_index">
+<h1>Instance HA Features</h1></div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode rvc" ref="instance_ha_features/1_change_primary">
+<h1>Changing the Primary node</h1>
+
+<h3>Failing over an instance</h3>
+
+<pre><code><code class="command">$ gnt-instance failover INSTANCE_NAME</code><code class="result">
+</code></code></pre>
+
+<h3>Live migrating an instance</h3>
+
+<pre><code><code class="command">$ gnt-instance migrate INSTANCE_NAME</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list rvc smtitle" ref="instance_ha_features/2_fix_disks/1">
+<h1>Restoring redundancy for DRBD-based instances</h1>
+
+<ul>
+<li>Primary node storage failed
+
+<ul>
+<li>Re-create disks on it</li>
+</ul>
+</li>
+<li>Secondary node storage failed
+
+<ul>
+<li>Re-create disks on secondary node</li>
+<li>Change secondary</li>
+</ul>
+</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental" ref="instance_ha_features/2_fix_disks/2">
+<h1>Replacing disks</h1>
+
+<pre><code><code class="command">$ # re-create disks on the primary node</code><code class="result">
+gnt-instance replace-disks -p INSTANCE_NAME
+
+</code><code class="command">$ # re-create disks on the current secondary</code><code class="result">
+gnt-instance replace-disks -s INSTANCE_NAME
+
+</code><code class="command">$ # change the secondary node, via manual </code><code class="result">
+</code><code class="command">$ # specification</code><code class="result">
+gnt-instance replace-disks -n NODE INSTANCE_NAME
+
+</code><code class="command">$ # change the secondary node, via an iallocator</code><code class="result">
+</code><code class="command">$ # script</code><code class="result">
+gnt-instance replace-disks -I SCRIPT INSTANCE_NAME
+
+</code><code class="command">$ # automatically fix the primary or secondary node</code><code class="result">
+gnt-instance replace-disks -a INSTANCE_NAME
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline medcode incremental smtitle" ref="instance_ha_features/3_convert_disk_type">
+<h1>Conversion of an instance's disk type</h1>
+
+<pre><code><code class="command">$ # start with a non-redundant instance</code><code class="result">
+gnt-instance add -t plain ... INSTANCE
+
+</code><code class="command">$ # later convert it to redundant</code><code class="result">
+gnt-instance stop INSTANCE
+gnt-instance modify -t drbd \
+    -n NEW_SECONDARY INSTANCE
+gnt-instance start INSTANCE
+
+</code><code class="command">$ # and convert it back</code><code class="result">
+gnt-instance stop INSTANCE
+gnt-instance modify -t plain INSTANCE
+gnt-instance start INSTANCE
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="node_operations/0_intro">
+<h1>Node Operations</h1></div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode redcode" ref="node_operations/1_add">
+<h1>Add/Re-add</h1>
+
+<pre><code><code class="command">$ gnt-node add NEW_NODE</code><code class="result">
+</code></code></pre>
+
+<h3>May need to pass <code>-s REPLICATION_IP</code> parameter</h3>
+
+<pre><code><code class="command">$ gnt-node add --readd EXISTING_NODE</code><code class="result">
+</code></code></pre>
+
+<h3><code>-s</code> parameter <em>not</em> required</h3></div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode rvc" ref="node_operations/2_master_failover">
+<h1>Master fail-over</h1>
+
+<pre><code><code class="command">$ gnt-cluster master-failover</code><code class="result">
+</code></code></pre>
+
+<h3>On a non-master, master-capable node</h3></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="node_operations/3_evacuate/1">
+<h1>Evacuating nodes</h1>
+
+<ul>
+<li>Moving the <em>primary</em> instances</li>
+<li>Moving <em>secondary</em> instances</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode" ref="node_operations/3_evacuate/2">
+<h1>Primary Instance conversion</h1>
+
+<pre><code><code class="command">$ gnt-node migrate NODE</code><code class="result">
+</code><code class="command">$ gnt-node evacuate NODE</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode bullets" ref="node_operations/3_evacuate/3">
+<h1>Node Removal</h1>
+
+<pre><code><code class="command">$ gnt-node remove NODE_NAME</code><code class="result">
+</code></code></pre>
+
+<ul>
+<li><em>Deconfigure</em> node</li>
+<li><em>Stop</em> ganeti daemons</li>
+<li>Node in <em>clean</em> state</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="job_operations/0_intro">
+<h1>Job Operations</h1></div>
+</div><div class="slide" data-transition="none"><div class="content commandline" ref="job_operations/1_querying/1">
+<h1>Listing Jobs</h1>
+
+<pre><code><code class="command">$ gnt-job list</code><code class="result">
+17771 success INSTANCE_QUERY_DATA
+17773 success CLUSTER_VERIFY_DISKS
+17775 success CLUSTER_REPAIR_DISK_SIZES
+17776 error   CLUSTER_RENAME(cluster.example.com)
+17780 success CLUSTER_REDIST_CONF
+17792 success INSTANCE_REBOOT(instance1.example.com)
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline" ref="job_operations/1_querying/2">
+<h1>Detailed Info</h1>
+
+<pre><code><code class="command">$ gnt-job info 17776</code><code class="result">
+Job ID: 17776
+  Status: error
+  Received:         2009-10-25 23:18:02.180569
+  Processing start: 2009-10-25 23:18:02.200335 (delta 0.019766s)
+  Processing end:   2009-10-25 23:18:02.279743 (delta 0.079408s)
+  Total processing time: 0.099174 seconds
+  Opcodes:
+    OP_CLUSTER_RENAME
+      Status: error
+      Processing start: 2009-10-25 23:18:02.200335
+      Processing end:   2009-10-25 23:18:02.252282
+      Input fields:
+        name: cluster.example.com
+      Result:
+        OpPrereqError
+        [Neither the name nor the IP address of the cluster has changed]
+      Execution log:
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline tiny smcommandline" ref="job_operations/1_querying/3">
+<h1>Watching a job</h1>
+
+<pre><code><code class="command">$ gnt-instance add --submit &#x2026; instance1</code><code class="result">
+JobID: 17818
+</code><code class="command">$ gnt-job watch 17818</code><code class="result">
+Output from job 17818 follows
+-----------------------------
+Mon Oct 26 2009  - INFO: Selected nodes for instance instance1 via iallocator dumb: node1, node2
+Mon Oct 26 2009 * creating instance disks...
+Mon Oct 26 2009 adding instance instance1 to cluster config
+Mon Oct 26 2009  - INFO: Waiting for instance instance1 to sync disks.
+&#x2026;
+Mon Oct 26 2009 creating os for instance instance1 on node node1
+Mon Oct 26 2009 * running the instance OS create scripts...
+Mon Oct 26 2009 * starting instance...
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="htools/0_intro">
+<h1>htools</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list redcode" ref="htools/1_examples/1">
+<h1>Components</h1>
+
+<ul>
+<li>Automatic allocation</li>
+<li><code>hbal</code> : Cluster rebalancer</li>
+<li><code>hail</code> : IAllocator script</li>
+<li><code>hspace</code> : Cluster capacity estimator</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental" ref="htools/1_examples/2">
+<h1><code>hbal</code></h1>
+
+<pre><code><code class="command">$ hbal -m ganeti.example.org</code><code class="result">
+Loaded 4 nodes, 63 instances
+Initial check done: 0 bad nodes, 0 bad instances.
+Initial score: 0.53388595
+Trying to minimize the CV...
+    1. bonsai            g1:g2 =&gt; g2:g1 0.53220090 a=f
+    2. connectopensource g3:g1 =&gt; g1:g3 0.53114943 a=f
+    3. amahi             g2:g3 =&gt; g3:g2 0.53088116 a=f
+    4. mertan            g1:g2 =&gt; g2:g1 0.53031862 a=f
+    5. dspace            g3:g1 =&gt; g1:g3 0.52958328 a=f
+Cluster score improved from 0.53388595 to 0.52958328
+Solution length=5
+</code></code></pre>
+
+<h2>Useful for cluster re-balancing</h2></div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental" ref="htools/1_examples/3">
+<h1><code>hbal</code></h1>
+
+<pre><code><code class="command">$ hbal -C -m ganeti.example.org</code><code class="result">
+Loaded 4 nodes, 71 instances
+Initial check done: 0 bad nodes, 0 bad instances.
+Initial score: 2.10591985
+Trying to minimize the CV...
+    1. linuxfund            g4:g3 =&gt; g4:g2 2.09981699 a=r:g2
+Cluster score improved from 2.10591985 to 2.09981699
+Solution length=1
+
+Commands to run to reach the above solution:
+
+  echo jobset 1, 1 jobs
+    echo job 1/1
+    gnt-instance replace-disks -n g2 linuxfund
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental bigcode" ref="htools/1_examples/4">
+<h1><code>hspace</code></h1>
+
+<pre><code><code class="command">$ hspace --memory 512 --disk 10240 \</code><code class="result">
+</code><code class="command">$    -m ganeti.example.org</code><code class="result">
+HTS_INI_INST_CNT=63
+
+HTS_FIN_INST_CNT=101
+
+HTS_ALLOC_INSTANCES=38
+HTS_ALLOC_FAIL_REASON=FAILDISK
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental" ref="htools/1_examples/5">
+<h1><code>hail</code></h1>
+
+<pre><code><code class="command">$ gnt-instance add -t drbd -I hail \</code><code class="result">
+</code><code class="command">$   -s 10G -o image+ubuntu-maverick \</code><code class="result">
+</code><code class="command">$   --net 0:link=br42  instance1.example.org \</code><code class="result">
+ - INFO: Selected nodes for instance instance1.example.org 
+         via iallocator hail: node1.example.org, node2.example.org
+* creating instance disks...
+adding instance instance1.example.org to cluster config
+ - INFO: Waiting for instance instance1.example.org to sync disks.
+ - INFO: - device disk/0:  3.60% done, 1149 estimated seconds remaining
+ - INFO: - device disk/0: 29.70% done, 144 estimated seconds remaining
+ - INFO: - device disk/0: 55.50% done, 88 estimated seconds remaining
+ - INFO: - device disk/0: 81.10% done, 47 estimated seconds remaining
+ - INFO: Instance instance1.example.org's disks are in sync.
+* running the instance OS create scripts...
+* starting instance...
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="rapi/0_intro">
+<h1>Remote API</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="rapi/1_summary">
+<h1>Remote API</h1>
+
+<ul>
+<li><em>External</em> tools</li>
+<li>Retrieve cluster state</li>
+<li><em>Execute</em> commands</li>
+<li><em>JSON</em> over HTTP via <em>REST</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="rapi/2_security">
+<h1>RAPI Security</h1>
+
+<ul>
+<li>Users &amp; Passwords</li>
+<li>RFC 2617 <em>HTTP Authentication</em></li>
+<li>Read-only or Read-write</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="rapi/3_examples">
+<h1>RAPI Example use-cases</h1>
+
+<ul>
+<li>Web-based GUI (see <em>Ganeti Web Manager</em>)</li>
+<li>Automate cluster tasks via scripts</li>
+<li>Custom reporting tools</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="project_roadmap/0_intro">
+<h1>Project Roadmap</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="project_roadmap/1_details/1">
+<h1>Project Details</h1>
+
+<ul>
+<li>http://code.google.com/p/ganeti/</li>
+<li>License: <em>GPL v2</em></li>
+<li>Ganeti 1.2.0 - December 2007</li>
+<li>Ganeti 2.0.0 - May 2009</li>
+<li>Ganeti 2.4.0 - Mar 2011 / <em>2.4.2</em> current</li>
+<li>Ganeti 2.5.0 - <em>July 2011?</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="project_roadmap/1_details/2">
+<h1>Upcoming features</h1>
+
+<ul>
+<li>Merge htools</li>
+<li>CPU Pinning</li>
+<li>Replacing internal HTTP server</li>
+<li>Import/export version 2</li>
+<li>Moving instance across node groups</li>
+<li>Network management</li>
+<li>Shared storage support</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list center" ref="gwm_overview/1_overview">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_overview/logo.png" alt="gwm_logo"/></p>
+
+<ul>
+<li>Easy management of Ganeti</li>
+<li><em>Client</em> facing service</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="gwm_overview/2_history/1">
+<h1>Releases</h1>
+
+<ul>
+<li>Project Founded - 9-10-2011</li>
+<li>Version 0.4 - 12-20-2010</li>
+<li>Version 0.5 - 02-03-2011</li>
+<li>Version 0.6 - 03-04-2011</li>
+<li>Version 0.7 - <em>06-17-2011</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="gwm_overview/2_history/2">
+<h1>Open Sourced Libraries</h1>
+
+<ul>
+<li>Django Object Permissions</li>
+<li>Django Object Log</li>
+<li>Twisted VNC Auth Proxy</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center rvc" ref="gwm_install/1_install/1">
+<h1>Ganeti Web Manager</h1>
+
+<h3>Installation</h3>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_install/package.png" alt="package"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="gwm_install/1_install/2">
+<h1>Dependencies</h1>
+
+<ul>
+<li><em>Python</em> &gt;=2.5, 2.7 recommended</li>
+<li><em>Pip</em> - Python package installer</li>
+<li><em>Fabric</em> - Install scripts</li>
+<li><em>VirtualEnv</em> - Python virtual environments</li>
+<li><em>Git</em> - Distributed Source Control</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode incremental" ref="gwm_install/1_install/3">
+<h1>Fabric Installer</h1>
+
+<pre><code><code class="command">$ fab dev deploy</code><code class="result">
+
+</code><code class="command">$ fab prod deploy</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center" ref="gwm_install/3_import/1">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_install/clusters.png" alt="cluster_add"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="gwm_install/3_import/2">
+<h1>Import Tools</h1>
+
+<ul>
+<li>Find Orphaned Instances</li>
+<li>Import New Nodes &amp; Instances</li>
+<li>Remove Deleted Nodes &amp; Instances</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline medcode rvc incremental" ref="gwm_install/3_import/3">
+<h1>Cache Updater</h1>
+
+<h3>Imports Nodes and Virtual Machines too</h3>
+
+<pre><code><code class="command">$ twistd --pidfile=cache.pid gwm_cache</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="gwm_demo/1_caching">
+<h1>Cache System</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/ganeti_cache.png" alt="ganeti_cache"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center" ref="gwm_demo/2_overview">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/overview.png" alt="overview"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center" ref="gwm_demo/3_instances/1">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/instance-create.png" alt="instance-create"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center" ref="gwm_demo/3_instances/2">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/instance-create-job.png" alt="instance-create"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center" ref="gwm_demo/3_instances/3">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/instance-detail.png" alt="instance_detail"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center list bullets" ref="gwm_demo/4_vnc/1">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/vm-console.png" alt="vm-console"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center bullets list" ref="gwm_demo/4_vnc/2">
+<h1>VNC Auth Proxy</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/vnc1.png" alt="vnc1"/></p>
+
+<ul>
+<li>allows proxying through firewall / VPN</li>
+<li>no need for passwords</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="gwm_demo/5_permissions/1">
+<h1>Permissions</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/permissions.png" alt="permissions"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center rvc" ref="gwm_demo/5_permissions/2">
+<h1>Personas</h1>
+
+<h3>Users can act on behalf of groups</h3>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/personas.png" alt="personas"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center bullets list" ref="gwm_demo/5_permissions/3">
+<h1>Ownership</h1>
+
+<h1>vs.</h1>
+
+<h1>Permissions</h1>
+
+<ul>
+<li>Ownership is for book keeping</li>
+<li>Permissions let you do things</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="gwm_demo/5_permissions/4">
+<h1>Users Tab</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/users_tab.png" alt="Users Tab"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="gwm_demo/5_permissions/5">
+<h1>Editing Users</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/add_user.png" alt="add_user"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="gwm_demo/6_quotas/1">
+<h1>Quotas</h1>
+
+<h2>Per Persona, Per Cluster</h2></div>
+</div><div class="slide" data-transition="none"><div class="content smtitle center" ref="gwm_demo/6_quotas/2">
+<h1>Overriding Default Quota</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/custom_quota.png" alt="custom_quota"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="gwm_demo/9_future_features">
+<h1>Future Features</h1>
+
+<ul>
+<li>Instance Template</li>
+<li>Instance Defaults</li>
+<li>API</li>
+<li>And much more!</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="ending/0_intro">
+<h1>Conclusion</h1></div>
+</div><div class="slide" data-transition="none"><div class="content license center rvc" ref="ending/1_ending">
+<h1>Questions?</h1>
+
+<table class="rdata">
+    <tr class="even">
+        <td>Lance Albertson</td>
+        <td>Peter Krenesky</td>
+    </tr>
+    <tr class="odd">
+        <td>lance@osuosl.org</td>
+        <td>peter@osuosl.org</td>
+    </tr>
+    <tr class="even">
+        <td>@ramereth</td>
+        <td>@kreneskyp</td>
+    </tr>
+    <tr class="odd">
+        <td>http://www.lancealbertson.com</td>
+        <td>http://blogs.osuosl.org/kreneskyp/</td>
+    </tr>
+</table>
+
+
+<h3>http://code.google.com/p/ganeti/</h3>
+
+<h3>http://code.osuosl.org/projects/ganeti-webmgr</h3>
+
+<p><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/ending/cc.png" title="Creative Commons License" alt="Creative Commons License"/></a></p>
+
+<p>Presentation made with <strong><em>showoff</em></strong></p>
+
+<p>http://github.com/ramereth/presentation-ganeti-tutorial</p>
+
+<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/">Creative Commons Attribution-Share Alike 3.0 United States License</a>.</p></div>
+</div>
+</div>
+
+</body>
+</html>
