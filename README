@@ -1,8 +1,1 @@
 Various presentations I've created using showoff but in static HTML.
-
- * Open Source Bridge 2010 - Creating a low-cost clustered virtualization environment with Ganeti
-   http://github.com/ramereth/presentation-ganeti/tree/osb10
-
-Resources
-
-  rsync -rvnm --exclude-from=rsync-exclude <source> <dest>
