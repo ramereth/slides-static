@@ -1,0 +1,449 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Hands on Virtualization with Ganeti</title>
+
+  <link rel="stylesheet" href="./css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="./css/showoff.css" type="text/css"/>
+
+  <script type="text/javascript" src="./js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="./js/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src="./js/jquery-print.js"></script>
+  <script type="text/javascript" src="./js/jquery.batchImageLoad.js"></script>
+
+  <script type="text/javascript" src="./js/jquery.doubletap-0.1.js"></script>
+
+  <script type="text/javascript" src="./js/fg.menu.js"></script>
+  <script type="text/javascript" src="./js/showoff.js"></script>
+  <script type="text/javascript" src="./js/jTypeWriter.js"> </script>
+  <script type="text/javascript" src="./js/sh_main.min.js"></script>
+  <script type="text/javascript" src="./js/core.js"></script>
+  <script type="text/javascript" src="./js/showoffcore.js"></script>
+
+  <link type="text/css" href="./css/fg.menu.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/theme/ui.all.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/sh_style.css" rel="stylesheet" >
+
+  
+    <link rel="stylesheet" href="file/custom.css" type="text/css"/>
+  
+
+  
+    <script type="text/javascript" src="file/timer.js"></script>
+  
+
+  <script type="text/javascript">
+  $(function(){
+    setupPreso(false, './');
+  });
+  </script>
+</head>
+
+<body>
+
+
+<a tabindex="0" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="navmenu"><span class="ui-icon ui-icon-triangle-1-s"></span>slides</a>
+<div id="navigation" class="hidden"></div>
+
+<div id="help">
+  <table>
+    <tr><td class="key">space, &rarr;</td><td>next slide</td></tr>
+    <tr><td class="key">&larr;</td><td>previous slide</td></tr>
+    <tr><td class="key">d</td><td>debug mode</td></tr>
+    <tr><td class="key">## &lt;ret&gt;</td><td>go to slide #</td></tr>
+    <tr><td class="key">c</td><td>table of contents (vi)</td></tr>
+    <tr><td class="key">f</td><td>toggle footer</td></tr>
+    <tr><td class="key">r</td><td>reload slides</td></tr>
+    <tr><td class="key">z</td><td>toggle help (this)</td></tr>
+  </table>
+</div>
+
+<div class="buttonNav">
+  <input type="submit" onClick="prevStep();" value="prev"/>
+  <input type="submit" onClick="nextStep();" value="next"/>
+</div>
+
+<div id="preso">loading presentation...</div>
+<div id="footer">
+  <span id="slideInfo"></span>
+  <span id="debugInfo"></span>
+  <span id="notesInfo"></span>
+</div>
+
+<div id="slides" class="offscreen" style="display:none;">
+<div class="slide" data-transition="none"><div class="content center" ref="start/1_intro">
+<h1>Ganeti Web Manager</h1>
+
+<h2>Cluster Management Made Simple</h2>
+
+<h3>Lance Albertson</h3>
+
+<h3>Peter Krenesky</h3>
+
+<h4>http://is.gd/oscongwm | http://is.gd/oscongwmpdf</h4></div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="start/2_bios">
+<h1>About us</h1>
+
+<ul>
+<li>OSU Open Source Lab</li>
+<li>Server hosting for Open Source Projects</li>
+<li>Open Source development projects</li>
+<li><strong>Lance</strong> / Lead Systems Administrator</li>
+<li><strong>Peter</strong> / Lead Software Engineer</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="start/3_tutorial_overview">
+<h1>Session Overview</h1>
+
+<ul>
+<li>Ganeti Basics</li>
+<li>Ganeti Web Manager</li>
+<li>GWM Internals</li>
+<li>Using GWM</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content limg center" ref="introduction/1_basic_overview/1">
+<h1>Ganeti Cluster</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/introduction/ganeti-cluster.png" alt="ganeti-cluster"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="introduction/1_basic_overview/2">
+<h1>What is Ganeti?</h1>
+
+<ul>
+<li><em>Cluster</em> virtual server management software tool</li>
+<li>Built on top of <em>existing</em> OSS hypervisors</li>
+<li>Fast &amp; simple <em>recovery</em> after physical failures</li>
+<li>Using <em>cheap</em> commodity hardware</li>
+<li>Private <em>IaaS</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="introduction/1_basic_overview/3">
+<h1>Comparing Ganeti</h1>
+
+<ul>
+<li>Utilizes <em>local</em> storage</li>
+<li>Built to deal with <em>hardware failures</em></li>
+<li><em>Mature</em> project</li>
+<li>Low package requirements</li>
+<li>Easily <em>pluggable</em> via hooks &amp; RAPI</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="introduction/2_project_history">
+<h1>Project Background</h1>
+
+<ul>
+<li><em>Google</em> funded project</li>
+<li>Used in internal corporate env</li>
+<li>Open Sourced in 2007 <em>GPLv2</em></li>
+<li>Team based in Google Switzerland</li>
+<li>Active mailing list &amp; IRC channel</li>
+<li>Started internally before <em>libvirt</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="terminology/0_intro">
+<h1>Terminology</h1></div>
+</div><div class="slide" data-transition="none"><div class="content S bullets sm-vert-img right-img" ref="terminology/1_components">
+<h1>Components</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/terminology/components.png" alt="components"/></p>
+
+<ul>
+<li>Python</li>
+<li>Haskell</li>
+<li>DRBD</li>
+<li>LVM</li>
+<li>Hypervisor</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="terminology/2_terminology">
+<h1>Architecture</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/terminology/ganeti-cluster.png" alt="ganeti-cluster"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="terminology/3_node">
+<h1>Nodes</h1>
+
+<ul>
+<li><em>Physical</em> machine</li>
+<li>Fault tolerance not <em>required</em></li>
+<li>Added/removed <em>at will</em> from cluster</li>
+<li>No <em>data loss</em> with loss of node</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center bullets list smimg smtitle" ref="terminology/4_instance/1">
+<h1>Instances</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/terminology/instances.png" alt="instances"/></p>
+
+<ul>
+<li>Virtual machine that <em>runs</em> on the cluster</li>
+<li><em>fault tolerant/HA</em> entity within cluster</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets redcode list" ref="terminology/4_instance/2">
+<h1>Instance Parameters</h1>
+
+<ul>
+<li>Hypervisor (called <code>hvparams</code>)</li>
+<li>General (called <code>beparams</code>)</li>
+<li>Networking (called <code>nicparams</code>)</li>
+<li><em>Modified</em> via instance or cluster defaults</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="terminology/4_instance/3">
+<h1>Disk template</h1>
+
+<ul>
+<li><strong>drbd</strong> : LVM + DRBD between 2 nodes</li>
+<li><strong>plain</strong> : LVM w/ no redundancy</li>
+<li><strong>file</strong> : Plain files, no redundancy</li>
+<li><strong>diskless</strong> : Special purposes</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list redcode" ref="terminology/5_other/1">
+<h1>IAllocator</h1>
+
+<ul>
+<li>Automatic placement of instances</li>
+<li>Eliminates manual node specification</li>
+<li><strong>htools</strong></li>
+<li>External scripts used to compute</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list recode" ref="terminology/5_other/2">
+<h1>Components</h1>
+
+<ul>
+<li>Automatic allocation</li>
+<li><strong>hbal</strong> : Cluster rebalancer</li>
+<li><strong>hail</strong> : IAllocator script</li>
+<li><strong>hspace</strong> : Cluster capacity estimator</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smtitle bullets list himg center" ref="terminology/5_other/3">
+<h1><em>Primary</em> &amp; <em>Secondary</em> concepts</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/terminology/primary-secondary.png" alt="primary-secondary"/></p>
+
+<ul>
+<li>Instances always runs on <em>primary</em></li>
+<li>Uses secondary node for <em>disk replication</em></li>
+<li>Depends on <em>disk template</em> (i.e. drbd)</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="rapi/0_intro">
+<h1>Remote API</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="rapi/1_summary">
+<h1>Remote API</h1>
+
+<ul>
+<li><em>External</em> tools</li>
+<li>Retrieve cluster state</li>
+<li><em>Execute</em> commands</li>
+<li><em>JSON</em> over HTTP via <em>REST</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="rapi/2_security">
+<h1>RAPI Security</h1>
+
+<ul>
+<li>Users &amp; Passwords</li>
+<li>RFC 2617 <em>HTTP Authentication</em></li>
+<li>Read-only or Read-write</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list center" ref="gwm_overview/1_overview">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_overview/logo.png" alt="gwm_logo"/></p>
+
+<ul>
+<li>Easy management of Ganeti</li>
+<li><em>Client</em> facing service</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="gwm_overview/2_history/1">
+<h1>Releases</h1>
+
+<ul>
+<li>Project Founded - 9-10-2011</li>
+<li>Version 0.4 - 12-20-2010</li>
+<li>Version 0.5 - 02-03-2011</li>
+<li>Version 0.6 - 03-04-2011</li>
+<li>Version 0.7 - <em>06-17-2011</em></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="gwm_overview/2_history/2">
+<h1>Open Sourced Libraries</h1>
+
+<ul>
+<li>Django Object Permissions</li>
+<li>Django Object Log</li>
+<li>Twisted VNC Auth Proxy</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center rvc" ref="gwm_install/1_install/1">
+<h1>Ganeti Web Manager</h1>
+
+<h3>Installation</h3>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_install/package.png" alt="package"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="gwm_install/1_install/2">
+<h1>Dependencies</h1>
+
+<ul>
+<li><em>Python</em> &gt;=2.5, 2.7 recommended</li>
+<li><em>Pip</em> - Python package installer</li>
+<li><em>Fabric</em> - Install scripts</li>
+<li><em>VirtualEnv</em> - Python virtual environments</li>
+<li><em>Git</em> - Distributed Source Control</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline bigcode incremental" ref="gwm_install/1_install/3">
+<h1>Fabric Installer</h1>
+
+<pre><code><code class="command">$ fab dev deploy</code><code class="result">
+
+</code><code class="command">$ fab prod deploy</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center" ref="gwm_install/3_import/1">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_install/clusters.png" alt="cluster_add"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="gwm_install/3_import/2">
+<h1>Import Tools</h1>
+
+<ul>
+<li>Find Orphaned Instances</li>
+<li>Import New Nodes &amp; Instances</li>
+<li>Remove Deleted Nodes &amp; Instances</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline medcode rvc incremental" ref="gwm_install/3_import/3">
+<h1>Cache Updater</h1>
+
+<h3>Imports Nodes and Virtual Machines too</h3>
+
+<pre><code><code class="command">$ twistd --pidfile=cache.pid gwm_cache</code><code class="result">
+</code></code></pre></div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="gwm_demo/1_caching">
+<h1>Cache System</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/ganeti_cache.png" alt="ganeti_cache"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center" ref="gwm_demo/2_overview">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/overview.png" alt="overview"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center" ref="gwm_demo/3_instances/1">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/instance-create.png" alt="instance-create"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center" ref="gwm_demo/3_instances/2">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/instance-create-job.png" alt="instance-create"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center" ref="gwm_demo/3_instances/3">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/instance-detail.png" alt="instance_detail"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content full-screen-img center list bullets" ref="gwm_demo/4_vnc/1">
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/vm-console.png" alt="vm-console"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center bullets list" ref="gwm_demo/4_vnc/2">
+<h1>VNC Auth Proxy</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/vnc1.png" alt="vnc1"/></p>
+
+<ul>
+<li>allows proxying through firewall / VPN</li>
+<li>no need for passwords</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="gwm_demo/5_permissions/1">
+<h1>Permissions</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/permissions.png" alt="permissions"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center rvc" ref="gwm_demo/5_permissions/2">
+<h1>Personas</h1>
+
+<h3>Users can act on behalf of groups</h3>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/personas.png" alt="personas"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center bullets list" ref="gwm_demo/5_permissions/3">
+<h1>Ownership</h1>
+
+<h1>vs.</h1>
+
+<h1>Permissions</h1>
+
+<ul>
+<li>Ownership is for book keeping</li>
+<li>Permissions let you do things</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="gwm_demo/5_permissions/4">
+<h1>Users Tab</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/users_tab.png" alt="Users Tab"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="gwm_demo/5_permissions/5">
+<h1>Editing Users</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/add_user.png" alt="add_user"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="gwm_demo/6_quotas/1">
+<h1>Quotas</h1>
+
+<h2>Per Persona, Per Cluster</h2></div>
+</div><div class="slide" data-transition="none"><div class="content smtitle center" ref="gwm_demo/6_quotas/2">
+<h1>Overriding Default Quota</h1>
+
+<p><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/gwm_demo/custom_quota.png" alt="custom_quota"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets list" ref="gwm_demo/9_future_features">
+<h1>Future Features</h1>
+
+<ul>
+<li>Instance Template</li>
+<li>Instance Defaults</li>
+<li>API</li>
+<li>And much more!</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsec" ref="ending/0_intro">
+<h1>Conclusion</h1></div>
+</div><div class="slide" data-transition="none"><div class="content license center rvc" ref="ending/1_ending">
+<h1>Questions?</h1>
+
+<table class="rdata">
+    <tr class="even">
+        <td>Lance Albertson</td>
+        <td>Peter Krenesky</td>
+    </tr>
+    <tr class="odd">
+        <td>lance@osuosl.org</td>
+        <td>peter@osuosl.org</td>
+    </tr>
+    <tr class="even">
+        <td>@ramereth</td>
+        <td>@kreneskyp</td>
+    </tr>
+    <tr class="odd">
+        <td>http://www.lancealbertson.com</td>
+        <td>http://blogs.osuosl.org/kreneskyp/</td>
+    </tr>
+</table>
+
+
+<h3>http://code.google.com/p/ganeti/</h3>
+
+<h3>http://code.osuosl.org/projects/ganeti-webmgr</h3>
+
+<p><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="file:///home/lance/git/github/presentation-ganeti-tutorial/ending/cc.png" title="Creative Commons License" alt="Creative Commons License"/></a></p>
+
+<p>Presentation made with <strong><em>showoff</em></strong></p>
+
+<p>http://github.com/ramereth/presentation-ganeti-tutorial</p>
+
+<h4>http://is.gd/oscongwm | http://is.gd/oscongwmpdf</h4></div>
+</div>
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try{
+var pageTracker = _gat._getTracker("UA-7186407-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+</html>
