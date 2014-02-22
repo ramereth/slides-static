@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DevOps for University Students &mdash; DevOps for University Students 2014.02.19 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="top" title="DevOps for University Students 2014.02.19 documentation" href="index.html" />
+    <link rel="next" title="Proposal" href="proposal.html" />
+    <link rel="prev" title="Proposal" href="proposal.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  <article class="slide level-1" id="devops-for-university-students">
+<h1>DevOps for University Students</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">author:</th><td class="field-body">Lance Albertson</td>
+</tr>
+<tr class="field-even field"><th class="field-name">title:</th><td class="field-body">Director / Sysadmin</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">company:</th><td class="field-body">OSU Open Source Lab</td>
+</tr>
+<tr class="field-even field"><th class="field-name">email:</th><td class="field-body"><a class="reference external" href="mailto:lance&#37;&#52;&#48;osuosl&#46;org">lance<span>&#64;</span>osuosl<span>&#46;</span>org</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">twitter:</th><td class="field-body">&#64;ramereth</td>
+</tr>
+</tbody>
+</table>
+<p><em>Attribution-ShareAlike CC BY-SA ©2014</em></p>
+<div class="toctree-wrapper compound">
+</div>
+
+</article>
+<article class="slide level-2" id="about-me">
+<h2>About me</h2>
+<ul class="simple">
+<li>OSU Open Source Lab Director</li>
+<li>Systems Admin background</li>
+<li>Been at OSL since 2007</li>
+<li>Experienced in:<ul>
+<li>Virtualization (Ganeti/KVM)</li>
+<li>cfengine, puppet, chef</li>
+<li>CentOS/Gentoo</li>
+<li>Mentoring students</li>
+</ul>
+</li>
+<li>Gentoo Developer</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="session-overview">
+<h2>Session Overview</h2>
+<ul class="build simple">
+<li>Current Learning Environment</li>
+<li>OSL Student Experience</li>
+<li>Devops Bootcamp</li>
+<li>Next Steps</li>
+</ul>
+
+</article>
+<article class="slide level-1" id="current-learning-environment">
+<h1>Current Learning Environment</h1>
+<p>There be dragons!</p>
+
+</article>
+<article class="slide level-2" id="theory-vs-applied">
+<h2>Theory vs. Applied</h2>
+<ul class="simple">
+<li>More focus on theory than applied<ul>
+<li>Classwork rarely mimics real-world</li>
+<li>Difficult to apply theory</li>
+</ul>
+</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/xkcd-171-string-theory.png"><img alt="_images/xkcd-171-string-theory.png" src="_images/xkcd-171-string-theory.png" style="width: 360.0px; height: 347.4px;" /></a>
+</div>
+
+</article>
+<article class="slide level-2" id="student-jobs">
+<h2>Student Jobs</h2>
+<p><em>Finding experience on campus</em></p>
+<ul class="simple">
+<li>Limited roles and access</li>
+<li>Limited availability</li>
+<li>No structure</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/osl-noc2.jpg"><img alt="_images/osl-noc2.jpg" src="_images/osl-noc2.jpg" style="width: 614.4px; height: 346.8px;" /></a>
+</div>
+
+</article>
+<article class="slide level-2" id="insufficient-mentoring">
+<h2>Insufficient Mentoring</h2>
+<ul class="simple">
+<li>No dedicated staff/faculty</li>
+<li>LUG's help, but not the solution</li>
+<li>No centralized program<ul>
+<li>Need a place for advanced students to excel more</li>
+<li>Also need an environment for <em>&quot;newbies&quot;</em></li>
+</ul>
+</li>
+</ul>
+
+</article>
+<article class="slide level-1" id="osl-student-experience">
+<h1>OSL Student Experience</h1>
+<p>Giving students real-world experience and mentorship</p>
+
+</article>
+<article class="slide level-2" id="osl-overview">
+<h2>OSL Overview</h2>
+<ul class="simple">
+<li>Provide hosting for FOSS projects</li>
+<li>Services we provide<ul>
+<li>Co/Location</li>
+<li>Virtualization (Cloud)</li>
+<li>Managed/Unmanaged hosting</li>
+<li>Email, DNS, mailing list, etc</li>
+</ul>
+</li>
+<li>Development focused on supporting hosting</li>
+<li>Media communications team</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="osl-noc">
+<h2>OSL NOC</h2>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/osl-noc.jpg"><img alt="_images/osl-noc.jpg" src="_images/osl-noc.jpg" style="width: 819.2px; height: 560.0px;" /></a>
+</div>
+
+</article>
+<article class="slide level-2" id="id1">
+<h2>OSL Student Experience</h2>
+<ul class="simple">
+<li>Given full <em>&quot;root&quot;</em></li>
+<li>Spend six months mentoring<ul>
+<li>Mix of full-timer and senior student mentorships</li>
+</ul>
+</li>
+<li>Work on support tickets and customers</li>
+<li>Interact with people internationally</li>
+<li>Ownership of a project</li>
+<li>Treated like a full-timer</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="scaling-problem">
+<h2>Scaling problem</h2>
+<ul class="build simple">
+<li>Balancing FTE to Student ratios</li>
+<li>A lot of time and resource is put in mentoring</li>
+<li>Represent less than 1% of total OSU CS population</li>
+<li>Budget constraints on hiring more students</li>
+</ul>
+
+</article>
+<article class="slide level-1" id="devops-bootcamp">
+<h1>DevOps Bootcamp</h1>
+<p>Expanding DevOps beyond the OSL...</p>
+<p><a class="reference external" href="http://devopsbootcamp.osuosl.org">http://devopsbootcamp.osuosl.org</a></p>
+
+</article>
+<article class="slide level-2" id="portland-state-braindump">
+<h2>Portland State <em>&quot;Braindump&quot;</em></h2>
+<ul class="simple">
+<li>Weekly meet up to teach being sysadmin</li>
+<li>In-depth teaching on specific topics (DNS, Apache, etc)</li>
+<li>Graduated system<ul>
+<li>Start out with helpdesk support</li>
+<li>Get &quot;non-root&quot; access to systems</li>
+<li>&quot;Rooter&quot;</li>
+</ul>
+</li>
+<li>Year long program<ul>
+<li>Starts out with 60+ end up with ~10 solid recruits</li>
+</ul>
+</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="adapt-psu-s-braindump">
+<h2>Adapt PSU's Braindump</h2>
+<p>Making it work for the OSL and OSU .. and DevOps Bootcamp was born!</p>
+<p><strong>Goals:</strong></p>
+<ul class="build simple">
+<li>Teach basic system administration skills</li>
+<li>Introduce FOSS development</li>
+<li>Publicize all the content</li>
+<li>Eventually integrate into EECS program</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="program-structure">
+<h2>Program Structure</h2>
+<ul class="simple">
+<li>Weekly meet ups about a specific topic</li>
+<li>Weekly content planning meetings</li>
+<li>Simple <em>homework</em> each week</li>
+<li>Both lecture and hands on</li>
+<li>Communication</li>
+</ul>
+<div class="figure align-right">
+<a class="reference internal image-reference" href="_images/dobc.jpg"><img alt="_images/dobc.jpg" src="_images/dobc.jpg" style="width: 480.0px; height: 267.0px;" /></a>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li>Mailing list</li>
+<li>IRC</li>
+<li>LUG</li>
+</ul>
+</div></blockquote>
+
+</article>
+<article class="slide level-2" id="tools">
+<h2>Tools</h2>
+<ul class="build simple">
+<li>Vagrant<ul>
+<li>CentOS/Debian VMs</li>
+</ul>
+</li>
+<li>Github</li>
+<li>Sphinx-doc and Read The Docs<ul>
+<li>Hieroglyph for slides</li>
+</ul>
+</li>
+<li>Google Hangouts Live (for recording)</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="curriculum">
+<h2>Curriculum</h2>
+<ul class="simple">
+<li>Linux Basics</li>
+<li>Basic System Administration</li>
+<li>Basic FOSS Development Methodologies</li>
+<li>Base infrastructure services for any organization<ul>
+<li>DNS, Email, web server, database servers, etc</li>
+</ul>
+</li>
+<li>Building a mock infrastructure for a mock company from top to bottom</li>
+<li>Content based from <a class="reference external" href="http://osuosl.org/students/cs312">CS312 Sysadmin class</a><ul>
+<li><em>last taught in 2009</em></li>
+</ul>
+</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="topics-discussed-so-far">
+<h2>Topics discussed so far</h2>
+<ul class="build simple">
+<li><strong>The Basics:</strong> Shell, file permissions, package management</li>
+<li>Editors and git</li>
+<li>Scripting &amp; Troubleshooting</li>
+<li>Services and deploying a web app</li>
+<li>Boot process and filesystem hierarchy</li>
+<li>Databases</li>
+<li>Security &amp; Authentication</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/xkcd_838.png"><img alt="_images/xkcd_838.png" src="_images/xkcd_838.png" style="width: 417.0px; height: 185.4px;" /></a>
+</div>
+
+</article>
+<article class="slide level-2" id="building-a-mock-infrastructure">
+<h2>Building a mock infrastructure</h2>
+<ul class="simple">
+<li>Build a breakable infrastructure<ul>
+<li>Best to learn from real-world experience</li>
+<li>But not production (yet)</li>
+</ul>
+</li>
+<li>Basic services:<ul>
+<li>DNS, Email, web, database, etc</li>
+</ul>
+</li>
+<li>Develop a basic webapp collaboratively</li>
+<li>Utilize configuration management (puppet / chef)</li>
+<li>Use the cloud (i.e. OpenStack, AWS, etc)</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="feedback">
+<h2>Feedback</h2>
+<ul class="simple">
+<li>Attendance<ul>
+<li>First meeting: 34</li>
+<li>Other meetings: 10-20</li>
+</ul>
+</li>
+<li>Format seems to work</li>
+<li>Vagrant and Virtualbox can be a PITA</li>
+<li>Recording using Google Hangouts is great (but buggy)</li>
+<li>Having everything in git is awesome</li>
+<li>It takes a long time to make content</li>
+<li>We started way too late</li>
+<li>Learn to be flexible</li>
+<li>K.I.S.S.</li>
+</ul>
+
+</article>
+<article class="slide level-1" id="next-steps">
+<h1>Next Steps</h1>
+
+</article>
+<article class="slide level-2" id="plans">
+<h2>Plans</h2>
+<ul class="simple">
+<li>Continue to build more content <em>(and tweak it)</em></li>
+<li>Develop new curriculum in EECS program<ul>
+<li>Create a side track focused on DevOps</li>
+</ul>
+</li>
+<li>Include outside speakers from the industry</li>
+<li>Include contributions from external sources<ul>
+<li>Because, FOSS!</li>
+</ul>
+</li>
+</ul>
+
+</article>
+<article class="slide level-1" id="questions">
+<h1>Questions?</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">name:</th><td class="field-body">Lance Albertson</td>
+</tr>
+<tr class="field-even field"><th class="field-name">company:</th><td class="field-body">OSU Open Source Lab</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">email:</th><td class="field-body"><a class="reference external" href="mailto:lance&#37;&#52;&#48;osuosl&#46;org">lance<span>&#64;</span>osuosl<span>&#46;</span>org</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">twitter:</th><td class="field-body">&#64;ramereth &#64;osuosl</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">blog:</th><td class="field-body"><a class="reference external" href="http://lancealbertson.com">http://lancealbertson.com</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">devopsbootcamp:</th><td class="field-body"><a class="reference external" href="http://devopsbootcamp.osuosl.org">http://devopsbootcamp.osuosl.org</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">github:</th><td class="field-body"><a class="reference external" href="https://github.com/devopsbootcamp">https://github.com/devopsbootcamp</a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Attribution-ShareAlike CC BY-SA ©2014</em></p>
+
+</article>
+
+
+</section>
+
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.02.19',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try{
+  var pageTracker = _gat._getTracker("UA-7186407-1");
+  pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>
