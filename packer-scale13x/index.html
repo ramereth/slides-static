@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Packer &mdash; Packer 2015.02.15 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.02.15',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    <link rel="top" title="Packer 2015.02.15 documentation" href="#" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  <article class="slide level-1" id="packer">
+<h1>Packer</h1>
+<p>Easily build machines images for multiple platforms with the same configuration</p>
+<p><a class="reference external" href="http://packer.io">http://packer.io</a></p>
+<p>Lance Albertson - &#64;ramereth - <a class="reference external" href="mailto:lance&#37;&#52;&#48;osuosl&#46;org">lance<span>&#64;</span>osuosl<span>&#46;</span>org</a></p>
+<p>Oregon State University Open Source Lab</p>
+
+</article>
+<article class="slide level-2" id="about-me">
+<h2>About me</h2>
+<ul class="simple">
+<li>Lance Albertson</li>
+<li>Director, OSU Open Source Lab (OSUOSL)<ul>
+<li>Provide infrastructure hosting for FOSS projects</li>
+<li>Linux Foundation, Python Software Foundation, Drupal, etc</li>
+</ul>
+</li>
+<li>Ops guy</li>
+<li><a class="reference external" href="http://osuosl.org">http://osuosl.org</a></li>
+</ul>
+
+</article>
+<article class="slide level-1" id="so-what-is-packer">
+<h1>So what is Packer?</h1>
+<ul class="simple">
+<li>Machine image building tool created by Mitchell Hashimoto (of Vagrant fame)</li>
+<li>Written in Go</li>
+<li>Makes your life easier</li>
+</ul>
+
+</article>
+<article class="slide level-1" id="supported-platforms">
+<h1>Supported Platforms</h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Amazon EC2</td>
+<td>Digital Ocean</td>
+</tr>
+<tr class="row-even"><td>Docker</td>
+<td>GCE</td>
+</tr>
+<tr class="row-odd"><td>Openstack</td>
+<td>Parallels</td>
+</tr>
+<tr class="row-even"><td>QEMU (kvm)</td>
+<td>Virtual Box</td>
+</tr>
+<tr class="row-odd"><td>VMWare</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+<article class="slide level-1" id="what-problem-does-packer-solve">
+<h1>What problem does Packer solve?</h1>
+<ul class="simple">
+<li>One image building tool to rule them all</li>
+<li>Single configuration to create images across multiple platforms<ul>
+<li>Cloud? Vagrant? Docker? -- YES!</li>
+</ul>
+</li>
+<li>Integrates into the cloud/devops model well</li>
+</ul>
+
+</article>
+<article class="slide level-1" id="terminology">
+<h1>Terminology</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Templates:</th><td class="field-body">JSON files containing the build information</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Builders:</th><td class="field-body">Platform specific building configuration</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Provisioners:</th><td class="field-body">Tools that install software after the initial OS install</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Post-processors:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Actions to happen after the image has been built</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+<article class="slide level-2" id="packer-build-steps">
+<h2>Packer Build Steps</h2>
+<p><em>This varies depending on which builder you use. The following is an example for
+the QEMU builder</em></p>
+<ol class="arabic simple">
+<li>Download ISO image</li>
+<li>Create virtual machine</li>
+<li>Boot virtual machine from the CD</li>
+<li>Using VNC, type in commands in the installer to start an automated install
+via kickstart/preseed/etc</li>
+<li>Packer automatically serves kickstart/preseed file with a built-in http
+server</li>
+</ol>
+
+</article>
+<article class="slide level-2" id="id1">
+<h2>Packer Build Steps</h2>
+<ol class="arabic simple" start="6">
+<li>Packer waits for ssh to become available</li>
+<li>OS installer runs and then reboots</li>
+<li>Packer connects via ssh to VM and runs provisioner (if set)</li>
+<li>Packer Shuts down VM and then runs the post processor (if set)</li>
+<li>PROFIT!</li>
+</ol>
+
+</article>
+<article class="slide level-2" id="variables-in-packer">
+<h2>Variables in Packer</h2>
+<p>Variables allow you to set API keys and other variable settings without changing
+the configuration file:</p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;aws_access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;aws_secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+  <span class="p">},</span>
+
+  <span class="nt">&quot;builders&quot;</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;amazon-ebs&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;{{user `aws_access_key`}}&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;{{user `aws_secret_key`}}&quot;</span><span class="p">,</span>
+  <span class="p">}]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-1" id="environment-variables">
+<h1>Environment Variables</h1>
+<p>You can also use variables to set environment variables within the packer
+environment that can be used by provisioners.</p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;my_secret&quot;</span><span class="p">:</span> <span class="s2">&quot;{{env `MY_SECRET`}}&quot;</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="setting-variables">
+<h2>Setting variables</h2>
+<p>You can set variables either via the CLI or importing them from a json file:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># Via CLI</span>
+<span class="nv">$ </span>packer build <span class="se">\</span>
+  -var <span class="s1">&#39;aws_access_key=foo&#39;</span> <span class="se">\</span>
+  -var <span class="s1">&#39;aws_secret_key=bar&#39;</span> <span class="se">\</span>
+  template.json
+
+<span class="c"># Via json file</span>
+<span class="nv">$ </span>packer build -var-file<span class="o">=</span>variables.json template.json
+</pre></div>
+</div>
+<p>This makes it easy for you to adapt your automated builds as you need fit.</p>
+
+</article>
+<article class="slide level-2" id="how-it-works">
+<h2>How it works</h2>
+<p class="px20-text">Packer template file for QEMU:</p>
+<div class="px22-text highlight-json"><div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;builders&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;boot_command&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;&lt;tab&gt; text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos-7.0/ks-openstack.cfg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;&lt;enter&gt;&lt;wait&gt;&quot;</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;accelerator&quot;</span><span class="p">:</span> <span class="s2">&quot;kvm&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;boot_wait&quot;</span><span class="p">:</span> <span class="s2">&quot;10s&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;disk_size&quot;</span><span class="p">:</span> <span class="mi">2048</span><span class="p">,</span>
+      <span class="nt">&quot;headless&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;http_directory&quot;</span><span class="p">:</span> <span class="s2">&quot;http&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;iso_checksum&quot;</span><span class="p">:</span> <span class="s2">&quot;df6dfdd25ebf443ca3375188d0b4b7f92f4153dc910b17bccc886bd54a7b7c86&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;iso_checksum_type&quot;</span><span class="p">:</span> <span class="s2">&quot;sha256&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;iso_url&quot;</span><span class="p">:</span> <span class="s2">&quot;{{user `mirror`}}/7.0.1406/isos/x86_64/CentOS-7.0-1406-x86_64-NetInstall.iso&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;output_directory&quot;</span><span class="p">:</span> <span class="s2">&quot;packer-centos-7.0-x86_64-openstack&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;qemuargs&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;1024m&quot;</span> <span class="p">]</span> <span class="p">],</span>
+      <span class="nt">&quot;qemu_binary&quot;</span><span class="p">:</span> <span class="s2">&quot;qemu-kvm&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;shutdown_command&quot;</span><span class="p">:</span> <span class="s2">&quot;echo &#39;centos&#39;\|sudo -S /sbin/halt -h -p&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ssh_password&quot;</span><span class="p">:</span> <span class="s2">&quot;centos&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ssh_port&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+      <span class="nt">&quot;ssh_username&quot;</span><span class="p">:</span> <span class="s2">&quot;centos&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ssh_wait_timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;10000s&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;qemu&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;vm_name&quot;</span><span class="p">:</span> <span class="s2">&quot;packer-centos-7.0-x86_64&quot;</span>
+  <span class="p">}],</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="id2">
+<h2>How it works</h2>
+<p>Continued...</p>
+<div class="px22-text highlight-json"><div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;provisioners&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;environment_vars&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;CHEF_VERSION={{user `chef_version`}}&quot;</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;execute_command&quot;</span><span class="p">:</span> <span class="s2">&quot;echo &#39;centos&#39; | {{.Vars}} sudo -S -E bash &#39;{{.Path}}&#39;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;scripts&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;scripts/centos/osuosl.sh&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scripts/centos/fix-slow-dns.sh&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scripts/common/sshd.sh&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scripts/common/vmtools.sh&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scripts/common/chef.sh&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scripts/centos/openstack.sh&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scripts/centos/cleanup.sh&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scripts/common/minimize.sh&quot;</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;shell&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;variables&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;chef_version&quot;</span><span class="p">:</span> <span class="s2">&quot;provisionerless&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;mirror&quot;</span><span class="p">:</span> <span class="s2">&quot;http://centos.osuosl.org&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="building-the-image">
+<h2>Building the Image</h2>
+<div class="codeblock-sm highlight-python"><div class="highlight"><pre>$ packer build centos-7.0-x86_64-openstack.json
+qemu output will be in this color.
+
+==&gt; qemu: Downloading or copying ISO
+    qemu: Downloading or copying: http://centos.osuosl.org/7.0.1406/isos/x86_64/CentOS-7.0-1406-x86_64-NetInstall.iso
+==&gt; qemu: Creating hard drive...
+==&gt; qemu: Starting HTTP server on port 8081
+==&gt; qemu: Found port for SSH: 3213.
+==&gt; qemu: Looking for available port between 5900 and 6000
+==&gt; qemu: Found available VNC port: 5947
+==&gt; qemu: Starting VM, booting from CD-ROM
+    qemu: WARNING: The VM will be started in headless mode, as configured.
+    qemu: In headless mode, errors during the boot sequence or OS setup
+    qemu: won&#39;t be easily visible. Use at your own discretion.
+==&gt; qemu: Overriding defaults Qemu arguments with QemuArgs...
+==&gt; qemu: Waiting 10s for boot...
+==&gt; qemu: Connecting to VM via VNC
+==&gt; qemu: Typing the boot command over VNC...
+==&gt; qemu: Waiting for SSH to become available...
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="using-the-command-line">
+<h2>Using the command line</h2>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># Build an image from a template</span>
+<span class="nv">$ </span>packer build template.json
+
+<span class="c"># Inspect at template to see its configuration</span>
+<span class="nv">$ </span>packer inspect template.json
+Optional variables and their defaults:
+
+  <span class="nv">chef_version</span> <span class="o">=</span> provisionerless
+  <span class="nv">mirror</span>       <span class="o">=</span> http://centos.osuosl.org
+
+Builders:
+
+  qemu
+
+Provisioners:
+
+  shell
+
+<span class="c"># Validate proper json and packer configuration</span>
+<span class="nv">$ </span>packer validate template.json
+Template validated successfully.
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="machine-readable-output">
+<h2>Machine readable output</h2>
+<p>Most commands allow readable output for scripts:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>packer inspect -machine-readable template.json
+1424621191,,ui,say,Optional variables and their defaults:<span class="se">\n</span>
+1424621191,,template-variable,chef_version,provisionerless,0
+1424621191,,ui,say,  <span class="nv">chef_version</span> <span class="o">=</span> provisionerless
+1424621191,,template-variable,mirror,http://centos.osuosl.org,0
+1424621191,,ui,say,  <span class="nv">mirror</span>       <span class="o">=</span> http://centos.osuosl.org
+1424621191,,ui,say,
+1424621191,,ui,say,Builders:<span class="se">\n</span>
+1424621191,,template-builder,qemu,qemu
+1424621191,,ui,say,  qemu
+1424621191,,ui,say,
+1424621191,,ui,say,Provisioners:<span class="se">\n</span>
+1424621191,,template-provisioner,shell
+1424621191,,ui,say,  shell
+</pre></div>
+</div>
+
+</article>
+<article class="slide level-2" id="builders">
+<h2>Builders</h2>
+<ul class="simple">
+<li>Responsible for creating and build the machines.<ul>
+<li>QEMU, Virtual Box, EC2, etc</li>
+</ul>
+</li>
+<li>Builder definition maps to exactly one build</li>
+<li>You can have multiple builder definitions using the same builder<ul>
+<li>You must have a unique <tt class="docutils literal"><span class="pre">name</span></tt> for each build definition</li>
+</ul>
+</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Amazon EC2</td>
+<td>Digital Ocean</td>
+</tr>
+<tr class="row-even"><td>Docker</td>
+<td>GCE</td>
+</tr>
+<tr class="row-odd"><td>Openstack</td>
+<td>Parallels</td>
+</tr>
+<tr class="row-even"><td>QEMU (kvm)</td>
+<td>Virtual Box</td>
+</tr>
+<tr class="row-odd"><td>VMWare</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+<article class="slide level-2" id="amazon-ami-builder">
+<h2>Amazon AMI Builder</h2>
+<dl class="docutils">
+<dt>amazon-ebs</dt>
+<dd>Create EBS-backed AMIs by launching a source AMI and re-packaging it into a
+new AMI after provisioning.</dd>
+<dt>amazon-instance</dt>
+<dd>Create instance-store AMIs by launching and provisioning a source instance,
+then rebundling it and uploading it to S3</dd>
+<dt>amazon-chroot</dt>
+<dd>Create EBS-backed AMIs from an existing EC2 instance by mounting the root
+device and using a Chroot environment to provision that device.</dd>
+</dl>
+
+</article>
+<article class="slide level-2" id="docker-builder">
+<h2>Docker Builder</h2>
+<ul class="simple">
+<li>Builds docker images without the use of a <tt class="docutils literal"><span class="pre">Dockerfile</span></tt></li>
+<li>Able to provision containers with portable scripts that aren't tied to Docker
+itself</li>
+<li>Allows you to use tools such as Chef, Ansible, etc to build the container</li>
+<li>Must be run on a machine that already has docker installed</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="provisioners">
+<h2>Provisioners</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="63%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Shell</td>
+<td>Run either inline or shell scripts</td>
+</tr>
+<tr class="row-even"><td>File Uploads</td>
+<td>Upload files and use shell scripts to move files around as needed</td>
+</tr>
+<tr class="row-odd"><td>Ansible</td>
+<td>Provision using playbook and role files</td>
+</tr>
+<tr class="row-even"><td>Chef Client</td>
+<td>Connect to a chef server and run chef</td>
+</tr>
+<tr class="row-odd"><td>Chef Solo</td>
+<td>Run a Chef solo run by pointing to local cookbooks or uploading them</td>
+</tr>
+<tr class="row-even"><td>Puppet Masterless</td>
+<td>Run local manifests and modules</td>
+</tr>
+<tr class="row-odd"><td>Puppet Server</td>
+<td>Connect to a puppet server and run puppet</td>
+</tr>
+<tr class="row-even"><td>Salt</td>
+<td>Using Salt states, deploy a vm using Salt</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+<article class="slide level-2" id="post-processors">
+<h2>Post-processors</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>compress</td>
+<td>Compress VMWare or Virtualbox image using gzip</td>
+</tr>
+<tr class="row-even"><td>docker-import</td>
+<td>Imports the docker image locally</td>
+</tr>
+<tr class="row-odd"><td>docker-push</td>
+<td>Push image to the docker repository</td>
+</tr>
+<tr class="row-even"><td>docker-save</td>
+<td>Saves docker image directly to a file</td>
+</tr>
+<tr class="row-odd"><td>docker-tag</td>
+<td>Tags a build in the docker repository</td>
+</tr>
+<tr class="row-even"><td>Vagrant</td>
+<td>Converts artifact into a valid Vagrant box file</td>
+</tr>
+<tr class="row-odd"><td>Vagrant Cloud</td>
+<td>Pushes artifact to Vagrant Cloud</td>
+</tr>
+<tr class="row-even"><td>vSphere</td>
+<td>Uploads artifact to a vSphere endpoint</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+<article class="slide level-2" id="extending-packer">
+<h2>Extending Packer</h2>
+<ul class="simple">
+<li>You can extend packer using its plugin system</li>
+<li>All builders, provisioners and post-processors are plugins themselves</li>
+<li>Check out their documentation:
+<a class="reference external" href="https://packer.io/docs/extend/developing-plugins.html">https://packer.io/docs/extend/developing-plugins.html</a></li>
+</ul>
+
+</article>
+<article class="slide level-1" id="other-useful-packer-tools">
+<h1>Other useful Packer tools</h1>
+
+</article>
+<article class="slide level-2" id="bento">
+<h2>Bento</h2>
+<p><a class="reference external" href="https://github.com/chef/bento">https://github.com/chef/bento</a></p>
+<ul class="simple">
+<li>Chef's Packer template and script repository for building their vagrant boxes</li>
+<li>Covers most platforms you care about</li>
+<li>Figured out the hard stuff for you!</li>
+<li>Great place to see how to see Packer examples</li>
+<li>Checkout our fork: <a class="reference external" href="https://github.com/osuosl/bento/">https://github.com/osuosl/bento/</a><ul>
+<li>QEMU Openstack builders for Ubuntu/Debian, CentOS/Fedora</li>
+</ul>
+</li>
+</ul>
+
+</article>
+<article class="slide level-2" id="demo-time">
+<h2>Demo time!</h2>
+
+</article>
+<article class="slide level-1" id="questions">
+<h1>Questions?</h1>
+<p><a class="reference external" href="http://packer.io">http://packer.io</a></p>
+<p>Lance Albertson - &#64;ramereth - <a class="reference external" href="mailto:lance&#37;&#52;&#48;osuosl&#46;org">lance<span>&#64;</span>osuosl<span>&#46;</span>org</a></p>
+<p>Oregon State University Open Source Lab</p>
+<p><a class="reference external" href="http://osuosl.org">http://osuosl.org</a></p>
+
+</article>
+
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try{
+  var pageTracker = _gat._getTracker("UA-7186407-1");
+  pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>

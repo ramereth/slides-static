@@ -1,0 +1,34 @@
+div.figure p.caption {
+    position: relative;
+}
+
+article.center-title > h2 {
+    position: relative;
+    align: center;
+    text-align: center;
+}
+
+table.citation {
+    font-size: 0.6em;
+    margin-top: 30px;
+}
+
+img {
+    margin-top: 1em;
+}
+
+.codeblock-sm {
+    font-size: 0.8em;
+}
+
+.px20-text {
+    font-size: 20px;
+}
+
+.px22-text {
+    font-size: 22px;
+}
+
+pre {
+    margin-top: 10px;
+}
