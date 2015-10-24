@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Project Hosting 3.0 &mdash; Project Hosting 3.0 1.0 documentation</title>
+
+    
+
+    
+<link rel="stylesheet" href="_static/css/reveal.css">
+<link rel="stylesheet" href="_static/css/theme/black.css" id="theme">
+<link rel="stylesheet" href="_static/lib/css/zenburn.css">
+<link rel="stylesheet" href="_static/revealjs.css" type="text/css" />
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+        if(window.location.search.match(/print-pdf/gi)) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = '_static/css/print/pdf.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="_static/lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        
+  <div class="section" id="project-hosting-3-0">
+<h1>Project Hosting 3.0<a class="headerlink" href="#project-hosting-3-0" title="Permalink to this headline">¶</a></h1>
+<section>
+<h2>Project Hosting 3.0</h2>
+<h3>Lance Albertson</h3>
+</section>
+<section>
+<h2>Session Summary</h2>
+<ul class="first last simple">
+<li>Brief history of FOSS hosting</li>
+<li>Advances made</li>
+<li>OSL Vision 2.0</li>
+<li>Discuss future of FOSS hosting</li>
+</ul>
+</section>
+<section>
+<h2>Types of FOSS Hosting</h2>
+<p class="fragment first">File Hosting</p>
+<p class="fragment">Hosted Platform Hosting</p>
+<p class="fragment">Co-Location Hosting</p>
+<p class="fragment last">Continuous Integration Hosting</p>
+</section>
+<section>
+<h2>Evolution of FOSS hosting</h2>
+<section class="first">
+<h2>File hosting</h2>
+<p class="first">Typically FTP and/or HTTP web servers hosted by:</p>
+<ul class="last simple">
+<li>Universities (IU, MIT, OSU)</li>
+<li>ISP&#8217;s</li>
+<li>Other orgs (Kernel.org, ISC)</li>
+</ul>
+</section>
+<section>
+<h2>Hosted Platform hosting</h2>
+<ul class="first last simple">
+<li>SourceForge (1999)</li>
+<li>GNU Savannah (2001)</li>
+<li>LaunchPad (2004)</li>
+<li>Google Code (2006)</li>
+<li>Github (2008)</li>
+<li>GitLab (2011)</li>
+</ul>
+</section>
+<section>
+<h2>Co-Location Hosting</h2>
+<ul class="first simple">
+<li>ISC (1994)</li>
+<li>OSU Open Source Lab (2003)</li>
+<li><em>Anyone else?</em></li>
+</ul>
+<aside class="last notes">
+<p class="first">Other universities and co-location facilities would also offer services,
+but usually at a smaller scale.</p>
+<p class="last">Some companies favor projects they use internally to support the community
+back.</p>
+</aside>
+</section>
+<section class="last">
+<h2>Continuous Integration Hosting</h2>
+<ul class="first simple">
+<li>CircleCI (2011)</li>
+<li>Travis CI (2012)</li>
+<li>Drone.io (2014)</li>
+</ul>
+<aside class="last notes">
+Fairly new space for FOSS hosting services. Still seeing a lot of growth
+here.</aside>
+</section>
+</section>
+<section>
+<h2>Major Advances</h2>
+<p class="fragment first">Github</p>
+<p class="fragment">Public cloud computing</p>
+<p class="fragment">More CDN choices (some offer free services to FOSS)</p>
+<p class="fragment">CI testing platforms</p>
+<aside class="fragment last notes">
+<p class="first">Github changed everything and really pushed the fold. Public computing
+also enabled a lot of other projects more flexibility in their hosting
+needs.</p>
+<p class="last">Companies like Fastly support FOSS projects by offering them either free
+or discounted FOSS access to their service.</p>
+</aside>
+</section>
+<section>
+<h2>Co-Location vs. Public Cloud</h2>
+<table border="1" class="first docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Co-Location</th>
+<th class="head">Public Cloud</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>More expensive</td>
+<td>Cheaper initial costs</td>
+</tr>
+<tr class="row-odd"><td>Less flexible</td>
+<td>More flexible</td>
+</tr>
+<tr class="row-even"><td>Better Performance</td>
+<td>Performance varies</td>
+</tr>
+<tr class="row-odd"><td>More control</td>
+<td>Less control</td>
+</tr>
+<tr class="row-even"><td>Hardware ownership</td>
+<td>Pay for the service</td>
+</tr>
+</tbody>
+</table>
+<aside class="last notes">
+Purely my opinion which may be wrong. Co-Location offers a lot of advantages
+and disadvantages. For some projects it works well, but many are getting
+tired of dealing with hardware issues and moving to the public or private
+cloud.</aside>
+</section>
+<section>
+<h2>OSL Advances</h2>
+<section class="first">
+<h2>New tools and technologies</h2>
+<p class="fragment first">Virtual computing / Private Cloud</p>
+<ul class="fragment simple">
+<li>OpenStack</li>
+<li>Ganeti</li>
+<li>Containers*</li>
+</ul>
+<p class="fragment">Storage Technologies</p>
+<ul class="fragment simple">
+<li>GlusterFS</li>
+<li>Ceph*</li>
+<li>Swift (S3)*</li>
+</ul>
+<aside class="fragment last notes">
+<p class="first">Started using Ganeti in 2009, and now working on offering a private
+Openstack cloud for FOSS projects. Started using OpenStack internally in
+the last year and a half. Looking at containers next.</p>
+<p class="last">Been using GlusterFS for 3+ years, looking at Ceph and Swift next for
+storage technologies.</p>
+</aside>
+</section>
+<section class="last">
+<h2>Configuration Management</h2>
+<p class="fragment first">Chef</p>
+<p class="fragment">Integration testing on infrastructure</p>
+<p class="fragment">Scale up infrastructure easier</p>
+<p class="fragment">Standardize deployments of services</p>
+<p class="fragment last">Delegate infrastructure code with projects</p>
+</section>
+</section>
+<section>
+<h2>What do FOSS Projects Need?</h2>
+<section class="first">
+<h2>Testing Resources</h2>
+<p class="fragment first">Flexible testing compute resources</p>
+<p class="fragment">Customizable test integration tools</p>
+<p class="fragment">Unique testing challenges</p>
+<aside class="last notes">
+<p class="first">Things that don&#8217;t fit well with free services like TravisCI.</p>
+<p>TravisCI can be slow, having dedicated high performance bare metal
+hardware is important</p>
+<p class="last">Some projects need to test their hardware at a larger scale to fix or find
+bugs</p>
+</aside>
+</section>
+<section>
+<h2>Managed Service Hosting</h2>
+<p class="fragment first">Hosting complex platforms:</p>
+<p class="fragment">Gerrit, Gitlab, Jenkins, etc</p>
+<p class="fragment">Mailman, Jira, etc</p>
+<p class="fragment">They need the service, but don&#8217;t want to manage it</p>
+<aside class="fragment last notes">
+We get a lot of requests to host random services that can be complicated
+to host. Most are alternatives to things like Github.</aside>
+</section>
+<section>
+<h2>Neutral CDN Mirroring</h2>
+<p class="fragment first">Projects get popular and need to scale fast</p>
+<p class="fragment">Current FTP mirroring infrastructure not flexible enough</p>
+<p class="fragment">API-driven, geographically diverse</p>
+<p class="fragment last">Hosted by a trusted entity</p>
+</section>
+<section class="last">
+<h2>Access to specialized hardware</h2>
+<p class="fragment first">New and upcoming hardware (ARM64, POWER8, Open Compute, etc)</p>
+<p class="fragment">Porting and fixing bugs</p>
+<p class="fragment last">IoT</p>
+</section>
+</section>
+<section>
+<h2>How do we get there?</h2>
+</section>
+<section>
+<h2>OSL Vision 2.0</h2>
+<section class="first">
+<h2>Technical Upgrade</h2>
+<p class="fragment first">Build and expand Cloud infrastructure (Ganeti &amp; OpenStack)</p>
+<p class="fragment">Automated Build Services</p>
+<p class="fragment">Test Services and Support</p>
+<p class="fragment">Project Dashboards</p>
+<p class="fragment">OSL CDN (ftp mirroring 2.0)</p>
+<p class="fragment last">Security Audits</p>
+</section>
+<section>
+<h2>OSL University Network</h2>
+<p class="fragment first">Collaborate with global universities</p>
+<p class="fragment">Host half rack of gear</p>
+<p class="fragment">OpenStack / Ganeti</p>
+<p class="fragment last">Mentor students at those universities</p>
+</section>
+<section class="last">
+<h2>Re-engineer backend services</h2>
+<p class="fragment first">Convert everything to Chef + CentOS</p>
+<p class="fragment">Catch up with technology trends</p>
+<p class="fragment">Fully testable infrastructure</p>
+<p class="fragment last">Make it more robust to failure</p>
+</section>
+</section>
+<section>
+<h2>OSL - SuperCell</h2>
+<section class="first">
+<h2>Currently</h2>
+<p class="fragment first">Created in 2010 in conjunction with Facebook</p>
+<p class="fragment">Utilized Ganeti to offer VM compute resources to projects</p>
+<p class="fragment last">Dozen or so projects are currently using it</p>
+</section>
+<section>
+<h2>Plans</h2>
+<p class="fragment first">Rebuild with OpenStack and expand resources</p>
+<p class="fragment">Ease on-boarding for projects</p>
+<p class="fragment">Offer pre-built managed CI solutions</p>
+<p class="fragment last">Access to upcoming testing suites from Academia</p>
+</section>
+<section class="last">
+<h2>Education and Diversity</h2>
+<p class="fragment first">Open Source track in EECS at OSU</p>
+<p class="fragment">Online classes targeted at DevOps topics</p>
+<p class="fragment">Diversify the OSL workforce</p>
+<aside class="fragment last notes">
+OSU Post-Bac program is a huge success. Piggy back on that.</aside>
+</section>
+</section>
+<section>
+<h2>Summary</h2>
+<p class="fragment first">Testing resources are important to projects</p>
+<p class="fragment">Need a place to host unique hardware</p>
+<p class="fragment">Managed service hosting</p>
+<p class="fragment">Increase our academic mission around DevOps and FOSS</p>
+<p class="fragment last">We need your help!</p>
+</section>
+<section>
+<h2>Discussion future of FOSS hosting</h2>
+<p class="fragment first">What do YOU need?</p>
+<p class="fragment">What is missing?</p>
+<p class="fragment">What&#8217;s important to you?</p>
+<p class="fragment last">What should the OSL be doing?</p>
+</section>
+<section>
+<h2>Questions?</h2>
+<p class="first">Lance Albertson</p>
+<p><a class="reference external" href="mailto:lance&#37;&#52;&#48;osuosl&#46;org">lance<span>&#64;</span>osuosl<span>&#46;</span>org</a></p>
+<p><a class="reference external" href="http://twitter.com/ramereth">&#64;ramereth</a></p>
+<p><a class="reference external" href="http://osuosl.org">http://osuosl.org</a></p>
+<p><a class="reference external" href="http://lancealbertson.com">http://lancealbertson.com</a></p>
+<p><a class="reference external" href="https://github.com/ramereth/presentation-project-hosting">https://github.com/ramereth/presentation-project-hosting</a></p>
+<p><em>Attribution-ShareAlike CC BY-SA ©2015</em></p>
+<div class="last"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+<img alt="Creative Commons License" style="border-width:0"
+src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a></div></section>
+</div>
+
+
+      </div>
+    </div>
+    
+<script src="_static/js/jquery.min.js"></script>
+<script src="_static/lib/js/head.min.js"></script>
+<script src="_static/js/reveal.js"></script>
+    <script>
+
+      // change DOM for reveal.js
+      $("div.section h1").remove();
+      var content = $("div.section").html();
+      $("div.section").remove();
+      $("div.slides").html(content);
+
+      Reveal.initialize({
+        width: 960,
+        height: 700,
+
+        margin: 0.1,
+
+        minScale: 0.2,
+        maxScale: 1.0,
+
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        keyboard : true,
+        overview: true,
+        touch: true,
+        loop: false,
+        rtl: false,
+        fragments: true,
+
+        autoSlide: 0,
+        mouseWheel: false,
+        rollingLinks: false,
+        previewLinks: false,
+
+        transitionSpeed: "default",
+        backgroundTransition: "default",
+
+        slideNumber: true,
+        embedded: false,
+        autoSlideStoppable: true,
+        hideAddressBar: true,
+
+        parallaxBackgroundImage: "",
+        parallaxBackgroundSize: "",
+
+        focusBodyOnPageVisiblityChange: true,
+
+        viewDistance: 3,
+
+        transition: Reveal.getQueryHash().transition || "default",
+
+        
+
+        dependencies: [
+           { src: '_static/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+           { src: '_static/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+           { src: '_static/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+           { src: '_static/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+           { src: '_static/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+           { src: '_static/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try{
+  var pageTracker = _gat._getTracker("UA-7186407-1");
+  pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>
