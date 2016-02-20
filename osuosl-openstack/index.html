@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>&lt;no title&gt; &mdash; OSUOSL Openstack 1.0 documentation</title>
+
+    
+
+    
+<link rel="stylesheet" href="_static/css/reveal.css">
+<link rel="stylesheet" href="_static/css/theme/black.css" id="theme">
+<link rel="stylesheet" href="_static/lib/css/zenburn.css">
+<link rel="stylesheet" href="_static/revealjs.css" type="text/css" />
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+        if(window.location.search.match(/print-pdf/gi)) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = '_static/css/print/pdf.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="_static/lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        
+  <section>
+<h2>Openstack at OSUOSL</h2>
+</section>
+<section>
+<section class="first">
+<h2>About me</h2>
+<p class="first">Director, OSU Open Source Lab</p>
+<p>Sysadmin, hacker, jazz trumpet</p>
+<p class="last">Gentoo, CentOS, Ganeti, OpenStack, etc</p>
+</section>
+<section class="last">
+<h2>What we do</h2>
+<p class="first">Infrastructure hosting for many FOSS projects</p>
+<p>Employ undergraduate students to learn devops</p>
+<p>Host 150 FOSS projects (closer to 1,000!)</p>
+<p class="last">Private cloud, co-location, mirroring</p>
+</section>
+</section>
+<section>
+<h2>Openstack History and Adventure</h2>
+</section>
+<section>
+<section class="first">
+<h2>So why Openstack?</h2>
+<p class="fragment first">Large Ganeti users</p>
+<p class="fragment">Works great for pet VMs, not so much on cattle</p>
+<p class="fragment">Needed a flexible and elastic environment for testing</p>
+<p class="fragment">Projects are requesting more flexible computing resources</p>
+<p class="fragment last">Experience for students and staff</p>
+</section>
+<section>
+<h2>The beginning</h2>
+<p class="fragment first">August 2013</p>
+<p class="fragment">Havana Release</p>
+<p class="fragment">Packstack</p>
+<p class="fragment">Puppet</p>
+<p class="fragment">Chef</p>
+<p class="fragment last">Icehouse</p>
+</section>
+<section>
+<h2>Config Setup</h2>
+<p class="fragment first">Ganeti VM as controller node</p>
+<p class="fragment">Shared bare-metal db server</p>
+<p class="fragment">One Physical Node</p>
+<p class="fragment last">CentOS 6</p>
+</section>
+<section class="last">
+<h2>Services enabled</h2>
+<p class="fragment first">Compute</p>
+<p class="fragment">Nova Networking (flat)</p>
+<p class="fragment">Glance</p>
+<p class="fragment">Keystone</p>
+<p class="fragment last">Horizon</p>
+</section>
+</section>
+<section>
+<h2>Current use</h2>
+<p class="fragment roll-in first">Chef Integration Testing</p>
+<p class="fragment roll-in">Test Kitchen</p>
+<p class="fragment roll-in">Multi-node testing</p>
+<p class="fragment roll-in">Staging applications and sites</p>
+<p class="fragment roll-in">System Admin Class at OSU</p>
+<p class="fragment roll-in">OpenPOWER-based cluster</p>
+<p class="fragment roll-in last">No production services (yet)</p>
+</section>
+<section>
+<h2>Clusters</h2>
+<p class="fragment first">x86 prod</p>
+<p class="fragment">x86 testing</p>
+<p class="fragment">Student Cloud (sysadmin class / DevOps Bootcamp)</p>
+<p class="fragment">ppc64/pp64le prod</p>
+<p class="fragment last">ppc64/ppc64le testing</p>
+</section>
+<section>
+<h2>Deployment with Chef</h2>
+<ul class="first last simple">
+<li><a class="reference external" href="https://docs.chef.io/openstack.html">Chef on OpenStack</a></li>
+<li><a class="reference external" href="https://launchpad.net/openstack-chef">OpenStack Official Chef Project</a></li>
+<li><a class="reference external" href="https://github.com/openstack/openstack-chef-repo">Example Chef Repo for OpenStack</a></li>
+<li>Split out into multiple cookbooks<ul>
+<li>compute, networking, etc</li>
+</ul>
+</li>
+</ul>
+</section>
+<section>
+<h2>OpenStack Chef Repo</h2>
+<ul class="first last simple">
+<li>Split out into dozens of roles</li>
+<li>Was difficult to figure out who to glue it all together</li>
+<li>Vagrant testing environments:<ul>
+<li>All-in-One</li>
+<li>Multi-host Neutron</li>
+</ul>
+</li>
+<li>Uses <a class="reference external" href="https://github.com/chef/chef-provisioning">Chef Provisioning</a> for testing with vagrant</li>
+</ul>
+</section>
+<section>
+<h2>Testing with Vagrant</h2>
+<pre class="first last">
+<code data-trim contenteditable>$ git clone https://github.com/openstack/openstack-chef-repo.git
+$ cd openstack-chef-repo
+$ chef exec rake berks_vendor
+$ chef exec rake allinone
+$ cd vms
+$ vagrant ssh controller
+$ sudo su -</code></pre>
+</section>
+<section>
+<h2>osl-openstack</h2>
+<ul class="first last simple">
+<li>OSL Wrapper Cookbook</li>
+<li>Took the roles from the OpenStack Chef Repo and converted them into recipes</li>
+<li>Testing<ul>
+<li>Test Kitchen for individual recipes</li>
+<li>Chef Provisioning environment</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/osuosl-cookbooks/osl-openstack">https://github.com/osuosl-cookbooks/osl-openstack</a></li>
+</ul>
+</section>
+<section>
+<h2>Test Kitchen</h2>
+<div class="first last"><blockquote>"An integration tool for developing and testing infrastructure
+code and software on isolated target platforms"</blockquote></div></section>
+<section>
+<h2>Test Kitchen</h2>
+<ul class="first last simple">
+<li>Primarily used with Chef, but can also be used with Puppet, Ansible, etc</li>
+<li>Uses Vagrant by default, but we use it with OpenStack</li>
+<li>ServerSpec for integration testing</li>
+<li>Not the best for multi-node test integration testing</li>
+</ul>
+</section>
+<section>
+<h2>Multi-Node Testing</h2>
+<p class="first">Using OpenStack to test OpenStack ...</p>
+<pre class="last">
+<code data-trim contenteditable>$ chef gem install chef-provisioning chef-provisioning-fog
+$ export CHEF_DRIVER="fog:OpenStack"
+$ export CONTROLLER_OS="CentOS 7.1"
+$ export COMPUTE_OS="CentOS 7.1"
+$ rake berks_vendor
+$ rake controller_compute</code></pre>
+</section>
+<section>
+<h2>Chef Provisioning Code</h2>
+<pre class="first last">
+<code data-trim contenteditable>require 'chef/provisioning'
+
+controller_os = ENV['CONTROLLER_OS'] || 'chef/centos-7.1'
+compute_os = ENV['COMPUTE_OS'] || 'chef/centos-7.1'
+controller_ssh_user = ENV['CONTROLLER_SSH_USER'] || 'centos'
+compute_ssh_user = ENV['COMPUTE_SSH_USER'] || 'centos'
+flavor_ref = ENV['FLAVOR'] || 3
+
+unless ENV['CHEF_DRIVER'] == 'fog:OpenStack'
+  require 'chef/provisioning/vagrant_driver'
+  vagrant_box controller_os
+  vagrant_box compute_os
+  with_driver "vagrant:#{File.dirname(__FILE__)}/../../../vms"
+end
+
+machine 'controller' do
+  machine_options vagrant_options: {
+    'vm.box' => controller_os
+  },
+                  bootstrap_options: {
+                    image_ref: controller_os,
+                    flavor_ref: flavor_ref,
+                    key_name: ENV['OS_SSH_KEYPAIR']
+                  },
+                  ssh_username: controller_ssh_user,
+                  floating_ip_pool: ENV['OS_FLOATING_IP_POOL']
+
+  ohai_hints 'openstack' => '{}'
+  add_machine_options vagrant_config: <<-EOF
+config.vm.network "private_network", ip: "192.168.60.10"
+config.vm.provider "virtualbox" do |v|
+  v.memory = 1024
+  v.cpus = 2
+end
+EOF
+  role 'openstack_provisioning'
+  recipe 'osl-openstack::ops_database'
+  recipe 'osl-openstack::controller'
+  recipe 'openstack-integration-test::setup'
+  file('/etc/chef/encrypted_data_bag_secret',
+       File.dirname(__FILE__) +
+       '/../default/encrypted_data_bag_secret')
+  converge true
+end</code></pre>
+</section>
+<section>
+<h2>Testing Deployment Phases</h2>
+<ol class="first last arabic simple">
+<li>Per recipe Test Kitchen testing</li>
+<li>Multi-node testing on OpenStack with Chef Provisioning</li>
+<li>Multi-node testing on bare-metal with Chef Provisioning</li>
+<li>Deployment on Production</li>
+</ol>
+</section>
+<section>
+<h2>OpenPOWER (POWER8) OpenStack</h2>
+<ul class="first last simple">
+<li>Collaborated with IBM to build a POWER8 OpenStack cluster for FOSS
+developers</li>
+<li>Internal IBM had developed a Fedora-clone called PowerKVM with OpenStack</li>
+<li>I charged IBM to allow the OSL to build a vanilla Fedora based cluster</li>
+<li>Forced IBM to ensure patches were making it upstream to libvirt, OpenStack,
+and KVM</li>
+<li>Provided an interesting challenge using Fedora in &#8220;production&#8221;</li>
+<li>No Chef support on ppc64 (at the time)</li>
+</ul>
+</section>
+<section>
+<h2>Current P8 Setup</h2>
+<ul class="first last simple">
+<li>Fedora 20 (ppc64) on compute nodes</li>
+<li>CentOS 6 (x86_64) VM for controller node</li>
+<li>Icehouse</li>
+<li>Guest support for ppc64 and pp64le</li>
+<li>Patched versions of:<ul>
+<li>Linux Kernel</li>
+<li>libvirt</li>
+<li>kvm</li>
+</ul>
+</li>
+</ul>
+</section>
+<section>
+<h2>Guest Images: Packer FTW!</h2>
+<ul class="first last simple">
+<li>Utilize <a class="reference external" href="http://packer.io">Packer</a> for building images</li>
+<li>We <a class="reference external" href="https://github.com/osuosl/bento">forked</a> the <a class="reference external" href="https://github.com/chef/bento">Chef Bento</a> repository</li>
+<li>Add OSL specific stuff</li>
+<li>Use Packer for building Ganeti images too</li>
+<li>Build Chef into the images</li>
+<li>Building Packer on ppc64 was ... a pain</li>
+</ul>
+</section>
+<section>
+<h2>Future Plans</h2>
+<ul class="first last simple">
+<li>Upgrade to latest release (Liberty possibly)</li>
+<li>Upgrade everything to CentOS 7 (including P8 systems)</li>
+<li>Switch to Neutron networking</li>
+<li>Switch to ppc64le on compute nodes</li>
+</ul>
+</section>
+<section>
+<h2>Questions?</h2>
+<p class="first">Lance Albertson</p>
+<p><a class="reference external" href="mailto:lance&#37;&#52;&#48;osuosl&#46;org">lance<span>&#64;</span>osuosl<span>&#46;</span>org</a></p>
+<p><a class="reference external" href="http://twitter.com/ramereth">&#64;ramereth</a></p>
+<p>osuosl.org</p>
+<p>lancealbertson.com</p>
+<p>github.com/ramereth/presentation-osuosl-openstack</p>
+<p><em>Attribution-ShareAlike CC BY-SA ©2015-2016</em></p>
+<div class="last"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+<img alt="Creative Commons License" style="border-width:0"
+src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a></div></section>
+
+
+      </div>
+    </div>
+    
+<script src="_static/js/jquery.min.js"></script>
+<script src="_static/lib/js/head.min.js"></script>
+<script src="_static/js/reveal.js"></script>
+    <script>
+
+      // change DOM for reveal.js
+      $("div.section h1").remove();
+      var content = $("div.section").html();
+      $("div.section").remove();
+      $("div.slides").html(content);
+
+      Reveal.initialize({
+        width: 960,
+        height: 700,
+
+        margin: 0.1,
+
+        minScale: 0.2,
+        maxScale: 1.0,
+
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        keyboard : true,
+        overview: true,
+        touch: true,
+        loop: false,
+        rtl: false,
+        fragments: true,
+
+        autoSlide: 0,
+        mouseWheel: false,
+        rollingLinks: false,
+        previewLinks: false,
+
+        transitionSpeed: "default",
+        backgroundTransition: "default",
+
+        slideNumber: true,
+        embedded: false,
+        autoSlideStoppable: true,
+        hideAddressBar: true,
+
+        parallaxBackgroundImage: "",
+        parallaxBackgroundSize: "",
+
+        focusBodyOnPageVisiblityChange: true,
+
+        viewDistance: 3,
+
+        transition: Reveal.getQueryHash().transition || "default",
+
+        
+
+        dependencies: [
+           { src: '_static/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+           { src: '_static/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+           { src: '_static/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+           { src: '_static/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+           { src: '_static/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+           { src: '_static/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+    
+  </body>
+</html>
